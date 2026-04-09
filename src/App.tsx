@@ -7,6 +7,7 @@ import { About } from '@/components/About'
 import { Vendors } from '@/components/Vendors'
 import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
+import { CookieConsent } from '@/components/CookieConsent'
 import { MessageCircle } from 'lucide-react'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <CookieConsent />
 
       {/* Floating WhatsApp CTA */}
       <a

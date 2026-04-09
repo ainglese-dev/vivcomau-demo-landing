@@ -4,48 +4,54 @@ import { Camera, Tv, Network, ServerCog, ShieldAlert, Cloud } from 'lucide-react
 const localServices = [
   {
     id: 'cctv',
-    title: 'CCTV & Security Systems',
+    title: 'Security Camera Installation',
     description:
-      'Security camera and alarm system installation for homes and offices. Remote monitoring setup with long-term warranty.',
+      'Protect your home and business with professional security camera systems. Includes remote monitoring setup, HD night vision, and a long-term installation warranty.',
     icon: Camera,
+    image: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=600&h=400&fit=crop',
   },
   {
     id: 'av',
-    title: 'Audio Visual Installation',
+    title: 'TV Mounting & Home Theatre',
     description:
-      'TV wall mounting, cable concealment, home theater, and professional office conference room setups.',
+      'Expert TV wall mounting with concealed cabling, surround sound setup, and professional conference room AV for offices.',
     icon: Tv,
+    image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&h=400&fit=crop',
   },
   {
     id: 'telecom',
-    title: 'Telecom & Cabling',
+    title: 'Network & Data Cabling',
     description:
-      'Structured cabling (Cat6/6A, fiber), data point installation, and office network troubleshooting.',
+      'Structured cabling (Cat6/6A, fibre), data point installation, and office network troubleshooting by certified technicians.',
     icon: Network,
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
   },
 ]
 
 const consultingServices = [
   {
     id: 'automation',
-    title: 'Network & DC Automation',
+    title: 'Data Centre Automation',
     description:
-      'Datacenter fabric design (VXLAN EVPN, ACI), Infrastructure as Code (Ansible, Terraform), and legacy migration.',
+      'Modernise your infrastructure with VXLAN EVPN fabric design, Infrastructure as Code (Ansible, Terraform), and legacy migration.',
     icon: ServerCog,
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop&q=80',
   },
   {
     id: 'compliance',
-    title: 'Compliance & AI Governance',
+    title: 'Cybersecurity & Compliance',
     description:
-      'US compliance verticals (HIPAA, PCI-DSS), industrial security (IEC 62443), and ISO 42001 AI Governance advisory.',
+      'Navigate complex compliance frameworks — HIPAA, PCI-DSS, IEC 62443, and ISO 42001 AI Governance advisory for regulated industries.',
     icon: ShieldAlert,
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop',
   },
   {
     id: 'cloud',
-    title: 'Cloud & DevOps',
+    title: 'Cloud Infrastructure',
     description:
-      'AWS/Azure architecture, Kubernetes infrastructure, CI/CD pipeline design, and hybrid cloud connectivity.',
+      'AWS and Azure architecture, Kubernetes platform engineering, CI/CD pipeline design, and hybrid cloud connectivity.',
     icon: Cloud,
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop',
   },
 ]
 
@@ -60,8 +66,16 @@ function ServiceCard({
   return (
     <Card
       id={service.id}
-      className="border-border shadow-sm hover:shadow-md transition-shadow flex flex-col"
+      className="border-border shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col"
     >
+      <div className="aspect-video w-full overflow-hidden bg-muted">
+        <img
+          src={service.image}
+          alt={service.title}
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          loading="lazy"
+        />
+      </div>
       <CardHeader className="pt-6">
         <div
           className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${accentClass}`}

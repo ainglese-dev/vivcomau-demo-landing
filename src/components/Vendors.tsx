@@ -1,5 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card'
-
 const lowVoltageVendors = [
   'Hikvision',
   'Dahua',
@@ -20,7 +18,10 @@ const networkingVendors = [
 
 export function Vendors() {
   return (
-    <section className="py-16 bg-muted/30 border-y border-border">
+    <section
+      className="py-16 bg-muted/30 border-y border-border"
+      aria-label="Trusted Vendors & Partners"
+    >
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-vivcom-dark-blue mb-3">
@@ -32,46 +33,68 @@ export function Vendors() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          <Card className="border-border shadow-sm bg-background">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-vivcom-dark-blue mb-4 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-vivcom-blue" />
-                Low Voltage & Physical Install
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {lowVoltageVendors.map((vendor) => (
-                  <span
-                    key={vendor}
-                    className="px-3 py-1.5 bg-muted text-vivcom-dark-blue text-sm font-medium rounded-md border border-border"
-                  >
-                    {vendor}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-border shadow-sm bg-background">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-vivcom-dark-blue mb-4 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-vivcom-green" />
-                Networking & Automation
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {networkingVendors.map((vendor) => (
-                  <span
-                    key={vendor}
-                    className="px-3 py-1.5 bg-muted text-vivcom-dark-blue text-sm font-medium rounded-md border border-border"
-                  >
-                    {vendor}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <div className="space-y-10 max-w-5xl mx-auto">
+          <TickerRow
+            label="Low Voltage & Physical Install"
+            vendors={lowVoltageVendors}
+            dotColor="bg-vivcom-blue"
+          />
+          <TickerRow
+            label="Networking & Automation"
+            vendors={networkingVendors}
+            dotColor="bg-vivcom-green"
+            reverse
+          />
         </div>
       </div>
     </section>
+  )
+}
+
+function TickerRow({
+  label,
+  vendors,
+  dotColor,
+  reverse = false,
+}: {
+  label: string
+  vendors: string[]
+  dotColor: string
+  reverse?: boolean
+}) {
+  // Triple the list for seamless looping on wide screens
+  const repeated = [...vendors, ...vendors, ...vendors]
+
+  return (
+    <div>
+      <h3 className="text-sm font-semibold text-vivcom-dark-blue mb-3 flex items-center gap-2">
+        <span className={`w-2 h-2 rounded-full ${dotColor}`} />
+        {label}
+      </h3>
+      <div
+        className="overflow-hidden"
+        style={{
+          maskImage:
+            'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+          WebkitMaskImage:
+            'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        }}
+      >
+        <div
+          className={`flex gap-10 w-max hover:[animation-play-state:paused] ${
+            reverse ? 'animate-marquee-reverse' : 'animate-marquee'
+          }`}
+        >
+          {repeated.map((vendor, i) => (
+            <span
+              key={`${vendor}-${i}`}
+              className="shrink-0 px-5 py-2.5 bg-background text-vivcom-dark-blue text-sm font-medium rounded-lg border border-border shadow-sm whitespace-nowrap"
+            >
+              {vendor}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }

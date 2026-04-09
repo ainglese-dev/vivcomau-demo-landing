@@ -45,6 +45,14 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+
+    --animate-marquee: marquee 35s linear infinite;
+    --animate-marquee-reverse: marquee 35s linear infinite reverse;
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
 }
 
 :root {
@@ -102,4 +110,11 @@
     scroll-behavior: smooth;
     scroll-padding-top: 4rem;
     }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation-play-state: paused !important;
+  }
 }

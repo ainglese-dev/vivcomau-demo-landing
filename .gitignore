@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Reference draft (not part of the build)
+vivcom-landing-page-draft/

@@ -1,4 +1,6 @@
 import { Phone, Mail, MapPin } from 'lucide-react'
+import { PrivacyPolicyDialog } from '@/components/legal/PrivacyPolicyDialog'
+import { CookiePolicyDialog } from '@/components/legal/CookiePolicyDialog'
 
 export function Footer() {
   return (
@@ -25,43 +27,28 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Services</h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <a
-                  href="#cctv"
-                  className="hover:text-vivcom-green transition-colors"
-                >
-                  CCTV & Security
+                <a href="#cctv" className="hover:text-vivcom-green transition-colors">
+                  Security Cameras
                 </a>
               </li>
               <li>
-                <a
-                  href="#av"
-                  className="hover:text-vivcom-green transition-colors"
-                >
-                  Audio Visual
+                <a href="#av" className="hover:text-vivcom-green transition-colors">
+                  TV Mounting & AV
                 </a>
               </li>
               <li>
-                <a
-                  href="#telecom"
-                  className="hover:text-vivcom-green transition-colors"
-                >
-                  Telecom & Cabling
+                <a href="#telecom" className="hover:text-vivcom-green transition-colors">
+                  Network & Data Cabling
                 </a>
               </li>
               <li>
-                <a
-                  href="#automation"
-                  className="hover:text-vivcom-green transition-colors"
-                >
-                  Network Automation
+                <a href="#automation" className="hover:text-vivcom-green transition-colors">
+                  Data Centre Automation
                 </a>
               </li>
               <li>
-                <a
-                  href="#compliance"
-                  className="hover:text-vivcom-green transition-colors"
-                >
-                  Compliance & AI
+                <a href="#compliance" className="hover:text-vivcom-green transition-colors">
+                  Cybersecurity & Compliance
                 </a>
               </li>
             </ul>
@@ -105,17 +92,30 @@ export function Footer() {
             &copy; {new Date().getFullYear()} VIVCOM PTY LTD. All rights
             reserved.
           </p>
-          <p className="mt-2 md:mt-0">
-            Powered by{' '}
-            <a
-              href="https://viv53.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/50 hover:text-white transition-colors"
-            >
-              VIV53
-            </a>
-          </p>
+          <div className="flex items-center gap-4 mt-2 md:mt-0">
+            <PrivacyPolicyDialog>
+              <button className="hover:text-white transition-colors">
+                Privacy Policy
+              </button>
+            </PrivacyPolicyDialog>
+            <CookiePolicyDialog>
+              <button className="hover:text-white transition-colors">
+                Cookie Policy
+              </button>
+            </CookiePolicyDialog>
+            <span>&middot;</span>
+            <span>
+              Powered by{' '}
+              <a
+                href="https://viv53.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-white transition-colors"
+              >
+                VIV53
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>
