@@ -1,4 +1,4 @@
-import { useMemo, type FormEvent } from 'react'
+import { useMemo, useRef, useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -13,7 +13,20 @@ import {
 import { Phone, MessageCircle, MapPin } from 'lucide-react'
 import { trackFormSubmission, trackCallClick, trackWhatsAppClick, getUtmParams } from '@/lib/analytics'
 
+function generateCaptcha() {
+  return {
+    a: Math.floor(Math.random() * 9) + 1,
+    b: Math.floor(Math.random() * 9) + 1,
+  }
+}
+
 export function Contact() {
+  const [honeypot, setHoneypot] = useState('')
+  const formLoadTime = useRef(Date.now())
+  const [captcha, setCaptcha] = useState(generateCaptcha)
+  const [captchaAnswer, setCaptchaAnswer] = useState('')
+  const [captchaError, setCaptchaError] = useState(false)
+
   const utmParams = useMemo(() => {
     const stored = getUtmParams()
     if (stored) {
@@ -33,6 +46,22 @@ export function Contact() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
+    // Honeypot: real users never fill this field
+    if (honeypot) return
+
+    // Time check: bots submit instantly; require ≥3s
+    if (Date.now() - formLoadTime.current < 3000) return
+
+    // Math CAPTCHA check
+    if (parseInt(captchaAnswer) !== captcha.a + captcha.b) {
+      setCaptchaError(true)
+      setCaptcha(generateCaptcha())
+      setCaptchaAnswer('')
+      return
+    }
+
+    setCaptchaError(false)
     trackFormSubmission()
     // TODO: wire to Formspree or Cloudflare Worker (PRD §11 item 6)
   }
@@ -183,6 +212,44 @@ export function Contact() {
                   name="message"
                   placeholder="Tell us about your project..."
                   className="min-h-[120px]"
+                />
+              </div>
+
+              {/* Math CAPTCHA */}
+              <div className="space-y-2 mb-6">
+                <Label htmlFor="captcha">Security Check *</Label>
+                <p className="text-sm text-muted-foreground">
+                  What is {captcha.a} + {captcha.b}?
+                </p>
+                <Input
+                  id="captcha"
+                  name="captcha"
+                  type="number"
+                  placeholder="Enter the answer"
+                  value={captchaAnswer}
+                  onChange={e => { setCaptchaAnswer(e.target.value); setCaptchaError(false) }}
+                  required
+                />
+                {captchaError && (
+                  <p className="text-sm text-destructive">Incorrect answer, please try again.</p>
+                )}
+              </div>
+
+              {/* Honeypot — hidden from real users, bots fill this */}
+              <div
+                aria-hidden="true"
+                className="absolute w-px h-px overflow-hidden opacity-0 pointer-events-none"
+                style={{ left: '-9999px', top: 'auto' }}
+              >
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  value={honeypot}
+                  onChange={e => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
                 />
               </div>
 
