@@ -25,3 +25,10 @@ dist-ssr
 
 # Reference draft (not part of the build)
 vivcom-landing-page-draft/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
