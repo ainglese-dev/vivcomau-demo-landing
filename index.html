@@ -5,8 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VIVCOM — Sydney CCTV, Cabling & Network Automation</title>
-    <meta name="description" content="VIVCOM — Sydney CCTV installation, structured cabling, AV systems, and enterprise network automation. Licensed, insured, 12+ years experience. Call +61 402 229 561." />
+    <meta name="description" content="VIVCOM provides professional CCTV installation, security camera systems, TV mounting, structured cabling, AV systems, and enterprise network automation services across Sydney, NSW. Licensed & insured with 12+ years experience. Free quotes — call +61 402 229 561." />
     <link rel="canonical" href="https://vivcom.com.au/" />
+
+    <!-- Geo meta tags -->
+    <meta name="geo.region" content="AU-NSW" />
+    <meta name="geo.placename" content="Sydney" />
+    <meta name="geo.position" content="-33.8688;151.2093" />
+    <meta name="ICBM" content="-33.8688, 151.2093" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -29,27 +35,45 @@
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "VIVCOM",
-        "description": "Low-voltage installations including CCTV, AV, and structured cabling across Sydney.",
+        "description": "Professional CCTV installation, security camera systems, TV mounting, structured cabling, AV systems, and network infrastructure services across Sydney, NSW.",
         "telephone": "+61402229561",
         "email": "hello@vivcom.com.au",
         "url": "https://vivcom.com.au",
+        "image": "https://vivcom.com.au/og-image.png",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Sydney",
+          "addressRegion": "NSW",
+          "addressCountry": "AU"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -33.8688,
+          "longitude": 151.2093
+        },
+        "openingHours": "Mo-Fr 08:00-18:00",
         "areaServed": {
           "@type": "City",
           "name": "Sydney",
           "addressRegion": "NSW",
           "addressCountry": "AU"
         },
-        "serviceType": ["CCTV Installation", "Audio Visual Installation", "Structured Cabling", "Network Installation"]
+        "serviceType": ["CCTV Installation", "Security Camera Installation", "Audio Visual Installation", "TV Mounting", "Structured Cabling", "Network Installation", "Data Cabling"]
       },
       {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "VIVCOM Consulting",
-        "description": "Enterprise IT consulting, datacenter automation, compliance advisory, and cloud architecture.",
+        "description": "Enterprise IT consulting — datacenter automation, VXLAN EVPN fabric design, compliance advisory, AI governance, and cloud architecture across Australia.",
         "telephone": "+61402229561",
         "email": "hello@vivcom.com.au",
         "url": "https://vivcom.com.au",
-        "serviceType": ["Network Automation", "Datacenter Design", "Compliance Advisory", "Cloud Architecture"]
+        "areaServed": {
+          "@type": "Country",
+          "name": "Australia"
+        },
+        "serviceType": ["Network Automation", "Datacenter Fabric Design", "VXLAN EVPN", "Compliance Advisory", "AI Governance", "Cloud Architecture", "Infrastructure as Code"]
       }
     ]
     </script>
@@ -57,5 +81,8 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "86e38cbdf37045fbb8c2ac9f98c1bfc5"}'></script>
+    <!-- End Cloudflare Web Analytics -->
   </body>
 </html>
