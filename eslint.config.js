@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'vivcom-landing-page-draft']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -18,6 +18,15 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+  },
+  {
+    // shadcn/ui generated files re-export variant helpers (e.g. buttonVariants)
+    // alongside components — this trips react-refresh/only-export-components,
+    // but we don't want to modify generated files. Scope the rule off here.
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   },
 ])

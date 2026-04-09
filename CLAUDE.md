@@ -2,28 +2,28 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Repository Status
-
-**Pre-scaffold.** As of this writing the repo contains only [PRD.md](PRD.md) — no application code exists yet. The React + Vite project is intended to be initialized from within Claude Code in VS Code (per PRD §1). When asked to "start" or "build" the site, scaffold into this directory rather than creating a subfolder.
-
 ## Project Purpose
 
 Replacement landing page for **vivcom.com.au** — a Sydney low-voltage / telecom company (VIVCOM PTY LTD, owned by Juan) that is merging its install services with the IT consulting / automation capabilities of **VIV53 LLC** (Miami). Single-page site, deployed to a Cloudflare Pages preview URL first for stakeholder review, then DNS cutover from the existing WordPress site.
 
 The customer sees **one brand (VIVCOM)**. Internal routing between Juan (Sydney installs) and VIV53 (remote consulting) is invisible to visitors but matters for lead routing — see PRD §13.
 
-## Planned Tech Stack (from PRD §6)
+## Tech Stack
 
 | Layer | Choice |
 |-------|--------|
-| Framework | React 18 + Vite |
-| Styling | Tailwind CSS + shadcn/ui |
+| Framework | React 19 + Vite 8 (TypeScript) |
+| Styling | Tailwind CSS v4 (Vite plugin, no PostCSS) + shadcn/ui (Nova preset, Radix base) |
+| Package manager | pnpm (via corepack); Node 20 LTS pinned in `.nvmrc` |
+| Path alias | `@/*` → `./src/*` (set in both `tsconfig.json`/`tsconfig.app.json` and `vite.config.ts`) |
 | Hosting | Cloudflare Pages (preview → prod via DNS cutover) |
 | Forms | Cloudflare Workers **or** Formspree (decision pending — PRD §11 item 6) |
 | Analytics | Cloudflare Web Analytics |
 | Ads | Google Ads via gtag.js (Cloudflare Zaraz vs direct snippet — PRD §11 item 15) |
 
 Tailwind/shadcn was chosen specifically to share design DNA with viv53.com — the two sites should "feel like siblings" (PRD §7.2).
+
+Note: PRD §6 originally specified React 18, but the scaffold uses React 19 / Vite 8 / TS 6 because that is what `pnpm create vite@latest --template react-ts` produces as of April 2026.
 
 ## Architectural Big Picture
 
@@ -75,4 +75,16 @@ If you need to make progress before these are resolved, pick a sensible default 
 
 ## Commands
 
-No build tooling exists yet. Once the Vite project is scaffolded, the standard commands will be `npm run dev`, `npm run build`, `npm run preview`. Update this section once `package.json` exists.
+| Command          | Purpose                                                                |
+| ---------------- | ---------------------------------------------------------------------- |
+| `pnpm install`   | Install dependencies                                                   |
+| `pnpm dev`       | Local dev server at <http://localhost:5173>                            |
+| `pnpm build`     | Type-check (`tsc -b`) + production build to `dist/`                    |
+| `pnpm preview`   | Serve the built `dist/` locally to sanity-check the production output  |
+| `pnpm lint`      | ESLint over the project                                                |
+
+Adding shadcn components: `pnpm dlx shadcn@latest add <component>` (e.g. `button`, `card`, `input`). Components land in [src/components/ui/](src/components/ui/).
+
+## Current Scaffold State
+
+The scaffold is minimal on purpose: only [src/components/Hero.tsx](src/components/Hero.tsx) exists as a real component (rendered from [src/App.tsx](src/App.tsx)). It proves Tailwind v4 + shadcn `Button` are wired and includes the real `tel:` and `wa.me` links from PRD §8 so the conversion paths work from day one. The remaining PRD §5 sections (Services, Why, Testimonials, About, Contact, Footer) are not yet built.
