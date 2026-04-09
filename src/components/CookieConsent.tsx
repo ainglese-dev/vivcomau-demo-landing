@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Cookie, ChevronDown, ChevronUp } from 'lucide-react'
 import { PrivacyPolicyDialog } from '@/components/legal/PrivacyPolicyDialog'
 import { CookiePolicyDialog } from '@/components/legal/CookiePolicyDialog'
+import { initAnalytics } from '@/lib/analytics'
 
 interface CookiePreferences {
   essential: boolean
@@ -33,7 +34,9 @@ export function CookieConsent() {
 
   useEffect(() => {
     const stored = getStoredPreferences()
-    if (!stored) {
+    if (stored) {
+      initAnalytics({ analytics: stored.analytics, marketing: stored.marketing })
+    } else {
       const timer = setTimeout(() => setIsVisible(true), 1000)
       return () => clearTimeout(timer)
     }
@@ -42,7 +45,7 @@ export function CookieConsent() {
   const saveAndClose = (prefs: CookiePreferences) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs))
     setIsVisible(false)
-    // TODO: Initialize analytics/marketing scripts based on prefs
+    initAnalytics({ analytics: prefs.analytics, marketing: prefs.marketing })
   }
 
   const handleAcceptAll = () =>

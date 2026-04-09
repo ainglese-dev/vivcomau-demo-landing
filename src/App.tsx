@@ -9,6 +9,7 @@ import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
 import { CookieConsent } from '@/components/CookieConsent'
 import { MessageCircle } from 'lucide-react'
+import { trackWhatsAppClick } from '@/lib/analytics'
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
+        onClick={() => trackWhatsAppClick()}
         className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-vivcom-green text-white shadow-lg hover:brightness-110 transition"
       >
         <MessageCircle className="w-6 h-6" />

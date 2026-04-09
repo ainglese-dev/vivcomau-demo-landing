@@ -11,21 +11,29 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Phone, MessageCircle, MapPin } from 'lucide-react'
-
-function getUtmParams() {
-  const params = new URLSearchParams(window.location.search)
-  return {
-    source: params.get('utm_source') ?? '',
-    medium: params.get('utm_medium') ?? '',
-    campaign: params.get('utm_campaign') ?? '',
-  }
-}
+import { trackFormSubmission, trackCallClick, trackWhatsAppClick, getUtmParams } from '@/lib/analytics'
 
 export function Contact() {
-  const utmParams = useMemo(() => getUtmParams(), [])
+  const utmParams = useMemo(() => {
+    const stored = getUtmParams()
+    if (stored) {
+      return {
+        source: stored.source ?? '',
+        medium: stored.medium ?? '',
+        campaign: stored.campaign ?? '',
+      }
+    }
+    const params = new URLSearchParams(window.location.search)
+    return {
+      source: params.get('utm_source') ?? '',
+      medium: params.get('utm_medium') ?? '',
+      campaign: params.get('utm_campaign') ?? '',
+    }
+  }, [])
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    trackFormSubmission()
     // TODO: wire to Formspree or Cloudflare Worker (PRD §11 item 6)
   }
 
@@ -61,6 +69,7 @@ export function Contact() {
                     </p>
                     <a
                       href="tel:+61402229561"
+                      onClick={() => trackCallClick()}
                       className="text-lg font-semibold text-vivcom-dark-blue hover:text-vivcom-blue transition-colors"
                     >
                       +61 402 229 561
@@ -80,6 +89,7 @@ export function Contact() {
                       href="https://wa.me/61402229561?text=Hi%20VIVCOM%2C%20I%27d%20like%20a%20quote%20for..."
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackWhatsAppClick()}
                       className="text-lg font-semibold text-vivcom-dark-blue hover:text-vivcom-green transition-colors"
                     >
                       Message us on WhatsApp

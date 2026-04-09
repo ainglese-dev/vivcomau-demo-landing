@@ -9,8 +9,9 @@ import {
 } from '@/components/ui/carousel'
 import type { CarouselApi } from '@/components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
-import { useRef, useState, useCallback, useEffect } from 'react'
+import { useRef, useState, useCallback, useEffect, useMemo } from 'react'
 import { cn } from '@/lib/utils'
+import { trackCallClick } from '@/lib/analytics'
 
 const PHONE_E164 = '+61402229561'
 const PHONE_DISPLAY = '+61 402 229 561'
@@ -73,6 +74,10 @@ export function Hero() {
   const plugin = useRef(Autoplay({ delay: 6000, stopOnInteraction: true }))
   const [api, setApi] = useState<CarouselApi>()
   const [active, setActive] = useState(0)
+  const prefersReducedMotion = useMemo(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
+  )
 
   const onSelect = useCallback(() => {
     if (!api) return
@@ -94,19 +99,47 @@ export function Hero() {
     <section
       id="hero"
       className={cn(
-        'relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32 transition-all duration-700',
-        t.bg,
+        'relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32 transition-all duration-700 bg-vivcom-dark-blue',
       )}
     >
+      {/* Background image (all slides) / video (slide 1 only) */}
+      {active === 0 && !prefersReducedMotion ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero-poster.jpg"
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/hero-background.webm" type="video/webm" />
+        </video>
+      ) : (
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: 'url(/hero-poster.jpg)' }}
+        />
+      )}
+      {/* Theme overlay for text readability */}
+      <div
+        className={cn(
+          'absolute inset-0 transition-colors duration-700',
+          active === 0 && 'bg-gradient-to-br from-vivcom-dark-blue/90 via-vivcom-blue/80 to-vivcom-green/70',
+          active === 1 && 'bg-vivcom-dark-blue/85',
+          active === 2 && 'bg-gradient-to-br from-slate-50/90 via-white/88 to-vivcom-grey/85',
+        )}
+      />
+
       {/* Decorative blob */}
       <div
         className={cn(
-          'absolute top-0 right-0 -translate-y-12 translate-x-1/3 w-[800px] h-[800px] rounded-full blur-3xl -z-10 transition-colors duration-700',
+          'absolute top-0 right-0 -translate-y-12 translate-x-1/3 w-[800px] h-[800px] rounded-full blur-3xl transition-colors duration-700 z-[1]',
           t.blob,
         )}
       />
 
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="relative z-10 container mx-auto px-4 md:px-6">
         <Carousel
           plugins={[plugin.current]}
           className="w-full max-w-6xl mx-auto"
@@ -151,7 +184,7 @@ export function Hero() {
                     </a>
                   </Button>
                   <Button asChild size="lg" variant="outline" className={cn('rounded-full', slideThemes[0].outlineBtn)}>
-                    <a href={`tel:${PHONE_E164}`}>
+                    <a href={`tel:${PHONE_E164}`} onClick={() => trackCallClick()}>
                       Call Now &middot; {PHONE_DISPLAY}
                     </a>
                   </Button>
@@ -188,8 +221,10 @@ export function Hero() {
                 </div>
                 <div className="relative aspect-video md:aspect-square lg:aspect-video rounded-2xl overflow-hidden shadow-2xl order-1 md:order-2 ring-1 ring-white/10">
                   <img
+                    srcSet="https://images.unsplash.com/photo-1558002038-1055907df827?w=400&h=300&fit=crop 400w, https://images.unsplash.com/photo-1558002038-1055907df827?w=800&h=600&fit=crop 800w"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     src="https://images.unsplash.com/photo-1558002038-1055907df827?w=800&h=600&fit=crop"
-                    alt="Security camera installation"
+                    alt="Professional CCTV security camera installation in Sydney by VIVCOM"
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
@@ -202,8 +237,10 @@ export function Hero() {
               <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center py-4 md:py-10">
                 <div className="relative aspect-video md:aspect-square lg:aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-vivcom-blue/10">
                   <img
+                    srcSet="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop 400w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop 800w"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop"
-                    alt="Data centre automation"
+                    alt="Enterprise data centre network automation and infrastructure"
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
