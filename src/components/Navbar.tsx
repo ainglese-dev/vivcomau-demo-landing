@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -8,6 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
+import { cn } from '@/lib/utils'
 
 const NAV_LINKS = [
   { href: '#services', label: 'Services' },
@@ -19,14 +20,28 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header
+      className={cn(
+        'fixed top-0 z-50 w-full border-b transition-all duration-300',
+        scrolled
+          ? 'bg-black/90 backdrop-blur border-white/10'
+          : 'bg-transparent border-transparent',
+      )}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo — text placeholder until PRD §11 item 1 (SVG from Juan) lands */}
+        {/* Logo */}
         <a
           href="#hero"
-          className="text-xl font-bold tracking-tighter"
+          className="text-xl font-bold tracking-tighter text-white"
           aria-label="VIVCOM home"
         >
           VIV<span className="text-vivcom-green">COM</span>
@@ -38,7 +53,7 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm font-medium text-white/80 transition-colors hover:text-white"
             >
               {link.label}
             </a>
@@ -46,14 +61,17 @@ export function Navbar() {
         </nav>
 
         {/* Desktop CTA */}
-        <Button asChild className="hidden lg:inline-flex">
+        <Button
+          asChild
+          className="hidden lg:inline-flex bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue font-semibold"
+        >
           <a href="#contact">Get a Quote</a>
         </Button>
 
         {/* Mobile hamburger */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild className="lg:hidden">
-            <Button variant="ghost" size="icon" aria-label="Open menu">
+            <Button variant="ghost" size="icon" aria-label="Open menu" className="text-white hover:bg-white/10 hover:text-white">
               <Menu className="size-5" />
             </Button>
           </SheetTrigger>
@@ -73,7 +91,7 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <Button asChild size="lg" className="mt-6">
+              <Button asChild size="lg" className="mt-6 bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue font-semibold">
                 <a href="#contact" onClick={() => setOpen(false)}>
                   Get a Quote
                 </a>
