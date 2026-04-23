@@ -59,7 +59,7 @@ export function Navbar() {
         {/* Desktop CTA */}
         <Button
           asChild
-          className="hidden lg:inline-flex bg-vivcom-green hover:bg-vivcom-green text-black font-semibold transition-transform hover:scale-105"
+          className="hidden lg:inline-flex bg-[rgb(0,194,203)] hover:bg-[rgb(0,194,203)] [a]:hover:bg-[rgb(0,194,203)] text-black font-semibold transition-transform hover:scale-105"
         >
           <a href="#contact">Get in Touch</a>
         </Button>
@@ -87,7 +87,7 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <Button asChild size="lg" className="mt-6 bg-vivcom-green hover:bg-vivcom-green text-black font-semibold transition-transform hover:scale-105">
+              <Button asChild size="lg" className="mt-6 bg-[rgb(0,194,203)] hover:bg-[rgb(0,194,203)] [a]:hover:bg-[rgb(0,194,203)] text-black font-semibold transition-transform hover:scale-105">
                 <a href="#contact" onClick={() => setOpen(false)}>
                   Get in Touch
                 </a>
