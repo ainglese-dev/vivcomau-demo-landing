@@ -67,7 +67,7 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button asChild size="lg" className="rounded-full gap-2 bg-vivcom-green hover:bg-vivcom-green/90 text-black">
+            <Button asChild size="lg" className="rounded-full gap-2 bg-[rgb(0,194,203)] hover:bg-[rgb(0,194,203)] [a]:hover:bg-[rgb(0,194,203)] text-black transition-transform hover:scale-105">
               <a href="#contact">
                 Let's Get Started
                 <ArrowRight className="w-5 h-5" />
