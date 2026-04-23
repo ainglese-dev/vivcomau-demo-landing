@@ -8,8 +8,8 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           <div className="col-span-1 md:col-span-2">
-            <div className="font-bold text-2xl tracking-tighter text-white mb-4">
-              VIV<span className="text-vivcom-green">COM</span>
+            <div className="mb-4">
+              <img src="/vivcom-logo.svg" alt="VIVCOM" className="h-10 w-auto" />
             </div>
             <p className="text-white/50 mb-6 max-w-md">
               Full-stack technology services for Sydney and beyond. From physical

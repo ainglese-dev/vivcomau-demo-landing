@@ -67,8 +67,7 @@ export function PrivacyPolicyContent() {
       <p>
         VIVCOM PTY LTD<br />
         Sydney, NSW, Australia<br />
-        Phone: <a href="tel:+61402229561" className="text-vivcom-blue hover:underline">0402 229 561</a><br />
-        Email: <span className="text-vivcom-blue">[privacy contact email — TBD]</span>
+        Email: <a href="mailto:contact@vivcom.com.au" className="text-vivcom-blue hover:underline">contact@vivcom.com.au</a>
       </p>
 
       <p className="text-xs text-muted-foreground">Last updated: April 2026</p>

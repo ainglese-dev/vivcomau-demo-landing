@@ -39,12 +39,8 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <a
-          href="#hero"
-          className="text-xl font-bold tracking-tighter text-white"
-          aria-label="VIVCOM home"
-        >
-          VIV<span className="text-vivcom-green">COM</span>
+        <a href="#hero" aria-label="VIVCOM home">
+          <img src="/vivcom-logo.svg" alt="VIVCOM" className="h-8 w-auto" />
         </a>
 
         {/* Desktop nav */}
@@ -65,7 +61,7 @@ export function Navbar() {
           asChild
           className="hidden lg:inline-flex bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue font-semibold"
         >
-          <a href="#contact">Get a Quote</a>
+          <a href="#contact">Get in Touch</a>
         </Button>
 
         {/* Mobile hamburger */}
@@ -93,7 +89,7 @@ export function Navbar() {
               ))}
               <Button asChild size="lg" className="mt-6 bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue font-semibold">
                 <a href="#contact" onClick={() => setOpen(false)}>
-                  Get a Quote
+                  Get in Touch
                 </a>
               </Button>
             </nav>

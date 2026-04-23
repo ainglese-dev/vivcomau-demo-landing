@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type FormEvent } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -44,7 +44,7 @@ export function Contact() {
     }
   }, [])
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault()
 
     // Honeypot: real users never fill this field
@@ -74,8 +74,7 @@ export function Contact() {
             Get in Touch
           </h2>
           <p className="text-lg text-foreground">
-            Request a free quote or schedule a consultation. We typically respond
-            within 24 hours.
+            Send us a message and we'll call you to discuss your project and arrange a meeting.
           </p>
         </div>
 

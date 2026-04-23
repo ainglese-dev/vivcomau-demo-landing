@@ -61,7 +61,7 @@ export function CookiePolicyContent() {
       <h3 className="text-vivcom-dark-blue font-semibold">5. Contact</h3>
       <p>
         If you have questions about our use of cookies, contact VIVCOM PTY LTD at{' '}
-        <a href="tel:+61402229561" className="text-vivcom-blue hover:underline">0402 229 561</a>.
+        <a href="mailto:contact@vivcom.com.au" className="text-vivcom-blue hover:underline">contact@vivcom.com.au</a>.
       </p>
 
       <p className="text-xs text-muted-foreground">Last updated: April 2026</p>

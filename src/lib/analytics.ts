@@ -42,17 +42,6 @@ export function trackFormSubmission(): void {
   })
 }
 
-export function trackWhatsAppClick(): void {
-  window.gtag?.('event', 'conversion', {
-    send_to: `${GOOGLE_ADS_ID}/CONVERSION_LABEL_WHATSAPP`,
-  })
-}
-
-export function trackCallClick(): void {
-  window.gtag?.('event', 'conversion', {
-    send_to: `${GOOGLE_ADS_ID}/CONVERSION_LABEL_CALL`,
-  })
-}
 
 // ---------------------------------------------------------------------------
 // UTM parameter capture

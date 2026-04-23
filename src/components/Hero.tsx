@@ -1,11 +1,7 @@
 import { Button } from '@/components/ui/button'
-import { ShieldCheck, Zap, Server, ArrowRight } from 'lucide-react'
+import { ShieldCheck, Zap, Server, ArrowRight, Mail } from 'lucide-react'
 import { useMemo } from 'react'
 import { cn } from '@/lib/utils'
-import { trackCallClick } from '@/lib/analytics'
-
-const PHONE_E164 = '+61402229561'
-const PHONE_DISPLAY = '+61 402 229 561'
 
 const trustBadges = [
   { icon: ShieldCheck, label: 'Licensed & Insured' },
@@ -73,16 +69,20 @@ export function Hero() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button asChild size="lg" className="rounded-full gap-2 bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue">
               <a href="#contact">
-                Get a Free Quote
+                Let's Get Started
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full border-white/50 text-white bg-white/10 hover:bg-white/20">
-              <a href={`tel:${PHONE_E164}`} onClick={() => trackCallClick()}>
-                Call Now &middot; {PHONE_DISPLAY}
+            <Button asChild size="lg" variant="outline" className="rounded-full border-white/50 text-white bg-white/10 hover:bg-white/20 gap-2">
+              <a href="mailto:contact@vivcom.com.au">
+                <Mail className="w-5 h-5" />
+                Email Us
               </a>
             </Button>
           </div>
+          <p className="mt-4 text-sm text-white/50">
+            Send us a message and we'll reach out to discuss your project.
+          </p>
         </div>
 
         {/* Trust badges */}
