@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Camera, Tv, Network, ServerCog, ShieldAlert, Cloud } from 'lucide-react'
+import { Camera, Network, Wifi, ShieldCheck, ServerCog, ShieldAlert, Cloud } from 'lucide-react'
 
 const localServices = [
   {
@@ -11,20 +11,29 @@ const localServices = [
     image: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=600&h=400&fit=crop',
   },
   {
-    id: 'av',
-    title: 'TV Mounting & Home Theatre',
-    description:
-      'Expert TV wall mounting with concealed cabling, surround sound setup, and professional conference room AV for offices.',
-    icon: Tv,
-    image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&h=400&fit=crop',
-  },
-  {
     id: 'telecom',
     title: 'Network & Data Cabling',
     description:
       'Structured cabling (Cat6/6A, fibre), data point installation, and office network troubleshooting by certified technicians.',
     icon: Network,
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
+    featured: true,
+  },
+  {
+    id: 'wireless',
+    title: 'Wireless & Wi-Fi Installation',
+    description:
+      'Professional Wi-Fi and mesh network setup for homes and offices. Coverage assessment, access point placement, and ongoing performance optimisation.',
+    icon: Wifi,
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&h=400&fit=crop',
+  },
+  {
+    id: 'security',
+    title: 'Security & Alarm Systems',
+    description:
+      'Alarm installation, access control, and intercom systems for residential and commercial properties. Monitored and unmonitored options available.',
+    icon: ShieldCheck,
+    image: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=400&fit=crop',
   },
 ]
 
@@ -64,32 +73,39 @@ function ServiceCard({
 }) {
   const Icon = service.icon
   return (
-    <Card
-      id={service.id}
-      className="border-border shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col"
-    >
-      <div className="aspect-video w-full overflow-hidden bg-muted">
-        <img
-          src={service.image}
-          alt={service.title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          loading="lazy"
-        />
-      </div>
-      <CardHeader className="pt-6">
-        <div
-          className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${accentClass}`}
-        >
-          <Icon className="w-6 h-6" />
+    <div className="relative">
+      {'featured' in service && service.featured && (
+        <span className="absolute top-3 right-3 z-10 text-xs font-semibold bg-vivcom-blue text-white px-2 py-0.5 rounded-full">
+          Featured
+        </span>
+      )}
+      <Card
+        id={service.id}
+        className={`border-border shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col h-full ${'featured' in service && service.featured ? 'ring-2 ring-vivcom-blue' : ''}`}
+      >
+        <div className="aspect-video w-full overflow-hidden bg-muted">
+          <img
+            src={service.image}
+            alt={service.title}
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
+          />
         </div>
-        <CardTitle className="text-xl">{service.title}</CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1">
-        <CardDescription className="text-base text-foreground">
-          {service.description}
-        </CardDescription>
-      </CardContent>
-    </Card>
+        <CardHeader className="pt-6">
+          <div
+            className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${accentClass}`}
+          >
+            <Icon className="w-6 h-6" />
+          </div>
+          <CardTitle className="text-xl">{service.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1">
+          <CardDescription className="text-base text-foreground">
+            {service.description}
+          </CardDescription>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 
@@ -119,7 +135,7 @@ export function Services() {
             </span>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {localServices.map((service) => (
               <ServiceCard
                 key={service.id}

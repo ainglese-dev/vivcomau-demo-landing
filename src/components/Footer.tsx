@@ -1,10 +1,10 @@
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
 import { PrivacyPolicyDialog } from '@/components/legal/PrivacyPolicyDialog'
 import { CookiePolicyDialog } from '@/components/legal/CookiePolicyDialog'
 
 export function Footer() {
   return (
-    <footer className="bg-vivcom-dark-blue text-white/70 py-12 md:py-16">
+    <footer className="bg-black text-white/70 py-12 md:py-16">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           <div className="col-span-1 md:col-span-2">
@@ -32,8 +32,13 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#av" className="hover:text-vivcom-green transition-colors">
-                  TV Mounting & AV
+                <a href="#wireless" className="hover:text-vivcom-green transition-colors">
+                  Wireless & Wi-Fi
+                </a>
+              </li>
+              <li>
+                <a href="#security" className="hover:text-vivcom-green transition-colors">
+                  Security & Alarm Systems
                 </a>
               </li>
               <li>
@@ -58,29 +63,20 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Contact</h3>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-vivcom-green shrink-0" />
-                <a
-                  href="tel:+61402229561"
-                  className="hover:text-white transition-colors"
-                >
-                  +61 402 229 561
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-vivcom-green shrink-0" />
                 <a
-                  href="mailto:hello@vivcom.com.au"
+                  href="mailto:contact@vivcom.com.au"
                   className="hover:text-white transition-colors"
                 >
-                  hello@vivcom.com.au
+                  contact@vivcom.com.au
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-vivcom-green shrink-0" />
                 <span>
-                  Sydney, NSW
+                  Sydney, Australia
                   <br />
-                  Australia
+                  Florida, United States
                 </span>
               </li>
             </ul>

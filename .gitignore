@@ -32,3 +32,4 @@ vivcom-landing-page-draft/
 !.dev.vars.example
 .env*
 !.env.example
+feedback-1/

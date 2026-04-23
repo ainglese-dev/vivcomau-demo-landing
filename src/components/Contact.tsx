@@ -10,8 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Phone, MessageCircle, MapPin } from 'lucide-react'
-import { trackFormSubmission, trackCallClick, trackWhatsAppClick, getUtmParams } from '@/lib/analytics'
+import { MapPin } from 'lucide-react'
+import { trackFormSubmission, getUtmParams } from '@/lib/analytics'
 
 function generateCaptcha() {
   return {
@@ -70,7 +70,7 @@ export function Contact() {
     <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-vivcom-dark-blue mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Get in Touch
           </h2>
           <p className="text-lg text-foreground">
@@ -89,44 +89,6 @@ export function Contact() {
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-vivcom-blue/10 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-vivcom-blue" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">
-                      Call Us
-                    </p>
-                    <a
-                      href="tel:+61402229561"
-                      onClick={() => trackCallClick()}
-                      className="text-lg font-semibold text-vivcom-dark-blue hover:text-vivcom-blue transition-colors"
-                    >
-                      +61 402 229 561
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-vivcom-green/10 flex items-center justify-center shrink-0">
-                    <MessageCircle className="w-5 h-5 text-vivcom-green" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">
-                      WhatsApp
-                    </p>
-                    <a
-                      href="https://wa.me/61402229561?text=Hi%20VIVCOM%2C%20I%27d%20like%20a%20quote%20for..."
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackWhatsAppClick()}
-                      className="text-lg font-semibold text-vivcom-dark-blue hover:text-vivcom-green transition-colors"
-                    >
-                      Message us on WhatsApp
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-vivcom-light-blue/10 flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5 text-vivcom-light-blue" />
                   </div>
@@ -135,7 +97,7 @@ export function Contact() {
                       Service Area
                     </p>
                     <p className="text-lg font-semibold text-vivcom-dark-blue">
-                      Sydney, NSW & Global Remote
+                      Sydney, Australia & Florida, United States
                     </p>
                   </div>
                 </div>
@@ -187,11 +149,10 @@ export function Contact() {
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="cctv">CCTV & Security</SelectItem>
-                      <SelectItem value="av">AV Installation</SelectItem>
-                      <SelectItem value="telecom">
-                        Telecom & Cabling
-                      </SelectItem>
+                      <SelectItem value="cctv">CCTV & Security Cameras</SelectItem>
+                      <SelectItem value="telecom">Network & Data Cabling</SelectItem>
+                      <SelectItem value="wireless">Wireless & Wi-Fi</SelectItem>
+                      <SelectItem value="security">Security & Alarm Systems</SelectItem>
                       <SelectItem value="automation">
                         Network Automation
                       </SelectItem>
@@ -256,7 +217,7 @@ export function Contact() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full text-base h-12 whitespace-nowrap"
+                className="w-full text-base h-12 whitespace-nowrap bg-black text-white hover:bg-zinc-800"
               >
                 Send Message
               </Button>
