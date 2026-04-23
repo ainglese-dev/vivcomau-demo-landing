@@ -8,15 +8,15 @@ export function CookiePolicyContent() {
         Draft template — requires legal review before go-live.
       </p>
 
-      <h3 className="text-vivcom-dark-blue font-semibold">1. What Are Cookies?</h3>
+      <h3 className="text-black font-semibold">1. What Are Cookies?</h3>
       <p>
         Cookies are small text files placed on your device when you visit a website. They help the site
         remember your preferences and understand how you interact with it.
       </p>
 
-      <h3 className="text-vivcom-dark-blue font-semibold">2. Cookies We Use</h3>
+      <h3 className="text-black font-semibold">2. Cookies We Use</h3>
 
-      <h4 className="text-vivcom-dark-blue font-medium">Essential Cookies</h4>
+      <h4 className="text-black font-medium">Essential Cookies</h4>
       <p>
         These cookies are required for the website to function. They include your cookie consent preference
         stored in your browser&rsquo;s local storage. They cannot be disabled.
@@ -25,13 +25,13 @@ export function CookiePolicyContent() {
         <li><strong>vivcom-cookie-consent</strong> — stores your cookie consent preferences (local storage).</li>
       </ul>
 
-      <h4 className="text-vivcom-dark-blue font-medium">Analytics Cookies</h4>
+      <h4 className="text-black font-medium">Analytics Cookies</h4>
       <p>
         When you consent, we use Cloudflare Web Analytics to understand how visitors interact with our site.
         Cloudflare Web Analytics is privacy-first and does not use cookies or collect personal data by default.
       </p>
 
-      <h4 className="text-vivcom-dark-blue font-medium">Marketing Cookies</h4>
+      <h4 className="text-black font-medium">Marketing Cookies</h4>
       <p>
         When you consent, we may load Google Ads conversion tracking (gtag.js) which sets cookies to measure
         the effectiveness of our advertising campaigns. These cookies are set by Google and are subject to
@@ -42,13 +42,13 @@ export function CookiePolicyContent() {
         <li><strong>_ga, _gid</strong> — Google Analytics (if enabled via Google Ads).</li>
       </ul>
 
-      <h3 className="text-vivcom-dark-blue font-semibold">3. Managing Your Preferences</h3>
+      <h3 className="text-black font-semibold">3. Managing Your Preferences</h3>
       <p>
         You can change your cookie preferences at any time using the &ldquo;Cookie Settings&rdquo; option in our website footer.
         You can also delete cookies through your browser settings.
       </p>
 
-      <h3 className="text-vivcom-dark-blue font-semibold">4. Third-Party Cookies</h3>
+      <h3 className="text-black font-semibold">4. Third-Party Cookies</h3>
       <p>
         Some cookies are placed by third-party services that appear on our pages. We do not control these
         cookies. Please refer to the respective third-party privacy policies:
@@ -58,7 +58,7 @@ export function CookiePolicyContent() {
         <li>Cloudflare — <span className="text-vivcom-blue">cloudflare.com/privacypolicy</span></li>
       </ul>
 
-      <h3 className="text-vivcom-dark-blue font-semibold">5. Contact</h3>
+      <h3 className="text-black font-semibold">5. Contact</h3>
       <p>
         If you have questions about our use of cookies, contact VIVCOM PTY LTD at{' '}
         <a href="mailto:contact@vivcom.com.au" className="text-vivcom-blue hover:underline">contact@vivcom.com.au</a>.

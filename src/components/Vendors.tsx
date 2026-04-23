@@ -24,7 +24,7 @@ export function Vendors() {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-vivcom-dark-blue mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-black mb-3">
             Trusted Vendors & Partners
           </h2>
           <p className="text-foreground">
@@ -67,7 +67,7 @@ function TickerRow({
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-vivcom-dark-blue mb-3 flex items-center gap-2">
+      <h3 className="text-sm font-semibold text-black mb-3 flex items-center gap-2">
         <span className={`w-2 h-2 rounded-full ${dotColor}`} />
         {label}
       </h3>
@@ -88,7 +88,7 @@ function TickerRow({
           {repeated.map((vendor, i) => (
             <span
               key={`${vendor}-${i}`}
-              className="shrink-0 px-5 py-2.5 bg-background text-vivcom-dark-blue text-sm font-medium rounded-lg border border-border shadow-sm whitespace-nowrap"
+              className="shrink-0 px-5 py-2.5 bg-background text-black text-sm font-medium rounded-lg border border-border shadow-sm whitespace-nowrap"
             >
               {vendor}
             </span>

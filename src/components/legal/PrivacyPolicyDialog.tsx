@@ -13,7 +13,7 @@ export function PrivacyPolicyDialog({ children }: { children: React.ReactNode })
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl text-vivcom-dark-blue">
+          <DialogTitle className="text-xl text-black">
             Privacy Policy
           </DialogTitle>
         </DialogHeader>

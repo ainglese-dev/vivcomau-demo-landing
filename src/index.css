@@ -59,13 +59,13 @@
     --background: #ffffff;
     --foreground: #666666;
     --card: #ffffff;
-    --card-foreground: #002352;
+    --card-foreground: #000000;
     --popover: #ffffff;
-    --popover-foreground: #002352;
+    --popover-foreground: #000000;
     --primary: #004aad;
     --primary-foreground: #ffffff;
     --secondary: #00c2cb;
-    --secondary-foreground: #002352;
+    --secondary-foreground: #000000;
     --muted: #f0f2f5;
     --muted-foreground: #666666;
     --accent: #e6fafb;

@@ -114,7 +114,7 @@ export function Services() {
     <section id="services" className="py-20 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-vivcom-dark-blue mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
             Our Services
           </h2>
           <p className="text-lg text-foreground">
@@ -126,7 +126,7 @@ export function Services() {
         {/* Tier 1: Local Installs */}
         <div className="mb-20">
           <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-2xl font-bold text-vivcom-dark-blue">
+            <h3 className="text-2xl font-bold text-black">
               Local Installations
             </h3>
             <div className="h-px bg-border flex-1" />
@@ -149,7 +149,7 @@ export function Services() {
         {/* Tier 2: Consulting & Automation */}
         <div>
           <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-2xl font-bold text-vivcom-dark-blue">
+            <h3 className="text-2xl font-bold text-black">
               Consulting & Automation
             </h3>
             <div className="h-px bg-border flex-1" />

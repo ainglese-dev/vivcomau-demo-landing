@@ -82,7 +82,7 @@ export function Contact() {
           {/* Contact Info */}
           <div className="lg:col-span-2 space-y-8">
             <div className="bg-muted/50 p-8 rounded-2xl border border-border">
-              <h3 className="text-xl font-bold text-vivcom-dark-blue mb-6">
+              <h3 className="text-xl font-bold text-black mb-6">
                 Contact Information
               </h3>
 
@@ -95,7 +95,7 @@ export function Contact() {
                     <p className="text-sm font-medium text-muted-foreground mb-1">
                       Service Area
                     </p>
-                    <p className="text-lg font-semibold text-vivcom-dark-blue">
+                    <p className="text-lg font-semibold text-black">
                       Sydney, Australia & Florida, United States
                     </p>
                   </div>

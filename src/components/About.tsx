@@ -18,7 +18,7 @@ export function About() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-vivcom-green/10 text-vivcom-blue text-sm font-medium mb-6">
               Our Story
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-vivcom-dark-blue mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
               Local Roots. <br />
               <span className="text-vivcom-green">Global Expertise.</span>
             </h2>
@@ -34,7 +34,7 @@ export function About() {
                 VIV53 LLC (Miami), bringing enterprise IT consulting, datacenter
                 automation, and compliance advisory to the Australian market.
               </p>
-              <p className="font-medium text-vivcom-dark-blue">
+              <p className="font-medium text-black">
                 Whether you need a home security system or a VXLAN EVPN
                 datacenter fabric, we are your full-stack technology partner.
               </p>
@@ -44,7 +44,7 @@ export function About() {
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-vivcom-green shrink-0 mt-0.5" />
-                  <span className="text-vivcom-dark-blue text-sm font-medium">
+                  <span className="text-black text-sm font-medium">
                     {benefit}
                   </span>
                 </div>

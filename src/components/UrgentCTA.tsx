@@ -24,7 +24,7 @@ export function UrgentCTA() {
         <Button
           asChild
           size="lg"
-          className="rounded-full gap-3 px-8 py-6 text-base font-semibold bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue shadow-lg shadow-vivcom-green/20"
+          className="rounded-full gap-3 px-8 py-6 text-base font-semibold bg-vivcom-green hover:bg-vivcom-green/90 text-black shadow-lg shadow-vivcom-green/20"
         >
           <a href="#contact">
             <Mail className="w-5 h-5" />

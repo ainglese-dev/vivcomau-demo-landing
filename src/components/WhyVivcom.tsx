@@ -41,7 +41,7 @@ export function WhyVivcom() {
                 <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center mb-4">
                   <Icon className="w-8 h-8 text-vivcom-blue" />
                 </div>
-                <h3 className="text-lg font-bold text-vivcom-dark-blue mb-2">
+                <h3 className="text-lg font-bold text-black mb-2">
                   {feature.title}
                 </h3>
                 <p className="text-sm text-foreground">{feature.description}</p>

@@ -66,7 +66,7 @@ export function CookieConsent() {
           <Cookie className="w-5 h-5 text-vivcom-green" />
         </div>
         <div>
-          <h3 className="text-base font-semibold text-vivcom-dark-blue mb-1">
+          <h3 className="text-base font-semibold text-black mb-1">
             We value your privacy
           </h3>
           <p className="text-sm text-foreground leading-relaxed">
@@ -89,7 +89,7 @@ export function CookieConsent() {
       {/* Granular preferences toggle */}
       <button
         onClick={() => setShowPreferences(!showPreferences)}
-        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-vivcom-dark-blue font-medium mb-4 transition-colors"
+        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-black font-medium mb-4 transition-colors"
       >
         Manage preferences
         {showPreferences ? (
@@ -134,7 +134,7 @@ export function CookieConsent() {
           Decline
         </Button>
         <Button
-          className="flex-1 bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue font-semibold"
+          className="flex-1 bg-vivcom-green hover:bg-vivcom-green/90 text-black font-semibold"
           onClick={handleAcceptAll}
         >
           Accept All
@@ -160,7 +160,7 @@ function PreferenceToggle({
   return (
     <label className="flex items-center justify-between gap-3 cursor-pointer">
       <div>
-        <span className="text-sm font-medium text-vivcom-dark-blue">
+        <span className="text-sm font-medium text-black">
           {label}
         </span>
         <p className="text-xs text-muted-foreground">{description}</p>

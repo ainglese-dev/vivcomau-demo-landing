@@ -13,9 +13,9 @@ import { cn } from '@/lib/utils'
 const NAV_LINKS = [
   { href: '#services', label: 'Services' },
   { href: '#why', label: 'Why VIVCOM' },
-  { href: '#testimonials', label: 'Testimonials' },
   { href: '#about', label: 'About' },
   { href: '#contact', label: 'Contact' },
+  { href: '#testimonials', label: 'Testimonials' },
 ]
 
 export function Navbar() {
@@ -59,7 +59,7 @@ export function Navbar() {
         {/* Desktop CTA */}
         <Button
           asChild
-          className="hidden lg:inline-flex bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue font-semibold"
+          className="hidden lg:inline-flex bg-vivcom-green hover:bg-vivcom-green/90 text-black font-semibold"
         >
           <a href="#contact">Get in Touch</a>
         </Button>
@@ -87,7 +87,7 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <Button asChild size="lg" className="mt-6 bg-vivcom-green hover:bg-vivcom-green/90 text-vivcom-dark-blue font-semibold">
+              <Button asChild size="lg" className="mt-6 bg-vivcom-green hover:bg-vivcom-green/90 text-black font-semibold">
                 <a href="#contact" onClick={() => setOpen(false)}>
                   Get in Touch
                 </a>
