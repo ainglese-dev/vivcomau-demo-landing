@@ -20,7 +20,7 @@ const testimonials = [
     name: 'Michael R.',
     role: 'IT Director',
     content:
-      "The VIV53 team's expertise in network automation helped us migrate our legacy infrastructure to a modern VXLAN fabric with zero downtime. Exceptional consulting.",
+      "The VIVCOM team's expertise in network automation helped us migrate our legacy infrastructure to a modern VXLAN fabric with zero downtime. Exceptional consulting.",
     rating: 5,
   },
 ]

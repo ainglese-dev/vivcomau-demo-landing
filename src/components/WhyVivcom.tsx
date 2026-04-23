@@ -21,7 +21,7 @@ const features = [
   {
     title: 'Local & Global Reach',
     description:
-      'On-site in Sydney, remote consulting worldwide via VIV53.',
+      'On-site in Sydney, remote consulting available worldwide.',
     icon: Globe,
   },
 ]
@@ -39,7 +39,7 @@ export function WhyVivcom() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center mb-4">
-                  <Icon className="w-8 h-8 text-vivcom-blue" />
+                  <Icon className="w-8 h-8 text-black" />
                 </div>
                 <h3 className="text-lg font-bold text-black mb-2">
                   {feature.title}

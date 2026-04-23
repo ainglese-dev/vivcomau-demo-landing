@@ -75,8 +75,6 @@ export function Footer() {
                 <MapPin className="w-5 h-5 text-vivcom-green shrink-0" />
                 <span>
                   Sydney, Australia
-                  <br />
-                  Florida, United States
                 </span>
               </li>
             </ul>
@@ -99,18 +97,6 @@ export function Footer() {
                 Cookie Policy
               </button>
             </CookiePolicyDialog>
-            <span>&middot;</span>
-            <span>
-              Powered by{' '}
-              <a
-                href="https://viv53.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/50 hover:text-white transition-colors"
-              >
-                VIV53
-              </a>
-            </span>
           </div>
         </div>
       </div>

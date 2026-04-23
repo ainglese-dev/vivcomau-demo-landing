@@ -140,7 +140,7 @@ export function Services() {
               <ServiceCard
                 key={service.id}
                 service={service}
-                accentClass="bg-vivcom-blue/10 text-vivcom-blue"
+                accentClass="bg-black/10 text-black"
               />
             ))}
           </div>
@@ -163,7 +163,7 @@ export function Services() {
               <ServiceCard
                 key={service.id}
                 service={service}
-                accentClass="bg-vivcom-light-blue/10 text-vivcom-light-blue"
+                accentClass="bg-black/10 text-black"
               />
             ))}
           </div>

@@ -37,12 +37,7 @@ export function PrivacyPolicyContent() {
       <ul className="list-disc pl-5 space-y-1">
         <li><strong>Cloudflare, Inc.</strong> — website hosting and analytics (US-based).</li>
         <li><strong>Google LLC</strong> — advertising measurement via Google Ads (US-based).</li>
-        <li><strong>VIV53 LLC</strong> — our consulting partner based in Miami, FL, USA. Enquiries related to consulting and automation services (Data Centre Automation, Cybersecurity & Compliance, Cloud Infrastructure) may be shared with VIV53 for fulfilment.</li>
       </ul>
-      <p>
-        By submitting an enquiry for consulting services, you consent to the cross-border transfer of your
-        information to the United States for the purpose of service delivery.
-      </p>
 
       <h3 className="text-black font-semibold">5. Data Storage & Security</h3>
       <p>

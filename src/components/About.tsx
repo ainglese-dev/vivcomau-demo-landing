@@ -30,9 +30,9 @@ export function About() {
                 and craftsmanship.
               </p>
               <p>
-                Today, VIVCOM has expanded its capabilities by partnering with
-                VIV53 LLC (Miami), bringing enterprise IT consulting, datacenter
-                automation, and compliance advisory to the Australian market.
+                Today, VIVCOM has expanded its capabilities to deliver enterprise
+                IT consulting, datacenter automation, and compliance advisory to
+                the Australian market.
               </p>
               <p className="font-medium text-black">
                 Whether you need a home security system or a VXLAN EVPN
