@@ -4,7 +4,7 @@ const benefits = [
   '12+ years of local Sydney experience',
   'Fully licensed and insured professionals',
   'Enterprise-grade consulting capabilities',
-  'Family business values, enterprise results',
+  'Client-first values, enterprise results',
   'Multi-vendor certified engineers',
   'Long-term warranty on installations',
 ]
@@ -25,8 +25,8 @@ export function About() {
             <div className="space-y-4 text-lg text-foreground mb-8">
               <p>
                 VIVCOM has been a trusted name in Sydney for over 12 years,
-                delivering high-quality low-voltage and telecom services. Owned
-                and operated by Juan, we've built our reputation on reliability
+                delivering high-quality low-voltage and telecom services. Founded
+                in Sydney, we've built our reputation on reliability
                 and craftsmanship.
               </p>
               <p>
@@ -53,11 +53,16 @@ export function About() {
           </div>
 
           <div className="relative">
-            <div className="aspect-square md:aspect-[4/5] rounded-2xl overflow-hidden relative bg-gradient-to-br from-vivcom-blue to-vivcom-dark-blue">
+            <div className="aspect-square md:aspect-[4/5] rounded-2xl overflow-hidden relative">
+              <img
+                src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80"
+                alt="VIVCOM engineers working in a datacenter"
+                className="w-full h-full object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-vivcom-dark-blue/60 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
-                <p className="font-bold text-xl mb-1">Family Business</p>
-                <p className="text-white/80">Enterprise Results</p>
+                <p className="font-bold text-xl mb-1">Trusted Specialists</p>
+                <p className="text-white/80">12+ Years of Excellence</p>
               </div>
             </div>
             <div className="absolute -top-6 -right-6 w-24 h-24 bg-vivcom-green rounded-full opacity-10 blur-2xl" />

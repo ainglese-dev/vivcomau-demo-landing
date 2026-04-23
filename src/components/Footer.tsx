@@ -17,7 +17,7 @@ export function Footer() {
               compliance.
             </p>
             <div className="flex items-center gap-4 text-sm text-white/40">
-              <span>ABN: Pending</span>
+              <span>ABN: 30 667 158 938</span>
               <span>&middot;</span>
               <span>Licensed & Insured</span>
             </div>

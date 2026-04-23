@@ -18,11 +18,11 @@ function App() {
         <Hero />
         <Services />
         <WhyVivcom />
-        <Testimonials />
         <UrgentCTA />
         <About />
         <Vendors />
         <Contact />
+        <Testimonials />
       </main>
       <Footer />
       <CookieConsent />
