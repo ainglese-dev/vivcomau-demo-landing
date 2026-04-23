@@ -295,4 +295,93 @@ Phase 3 — Go Live (Week 3-4)
 
 ---
 
+## 14. Security Review & Hardening
+
+*Reviewed: 2026-04-22. Full plan archived at `~/.claude/plans/help-me-review-security-ticklish-lollipop.md`.*
+
+### 14.1 Findings
+
+#### Critical (block production)
+
+- **C1. Contact form had no backend** — `handleSubmit` ran client-side checks but didn't POST anywhere. ✅ Fixed in Bucket A.
+- **C2. Google Ads ID was a placeholder** — `AW-XXXXXXXXXX` hardcoded; production would 404 on the injected gtag script. ✅ Fixed in Bucket A (env-var + `AW-\d+` guard).
+- **C3. No security headers** — missing CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy. ✅ Fixed in Bucket A (`public/_headers`).
+
+#### High
+
+- **H4. Dependency vulnerability — `hono <4.12.14`** (moderate, GHSA-458j-xx4x-4375) via `shadcn > @modelcontextprotocol/sdk > hono`. Not exploitable at runtime (we don't SSR with hono), but ships as transitive prod dep. ⏳ Open (Bucket B4).
+- **H5. `shadcn` CLI listed under `dependencies`** instead of `devDependencies`. Root cause of H4. ⏳ Open (Bucket B4).
+- **H6. Cloudflare beacon token hardcoded in `index.html`** — not secret by design, but preview and prod share the same analytics bucket. ⏳ Deferred (user decision).
+
+#### Medium
+
+- **M7. No rate limit / Turnstile on form endpoint** — server-side validation + honeypot + re-checked math CAPTCHA are in place, but no abuse-prevention binding. Worker is ready to verify Turnstile once a key is provisioned. ⏳ Open.
+- **M8. UTM parameter validation** — now allowlisted to `[A-Za-z0-9_\-.~]`, capped at 200 chars on both client and server. ✅ Fixed in Bucket A.
+- **M9. External assets without SRI** — Cloudflare beacon and Unsplash images. ⏳ Open (Bucket B6 / C8).
+
+#### Low / Info
+
+- **L10. Referrer-Policy / Permissions-Policy** — ✅ Now covered by `public/_headers`.
+- **L11. No dependency-audit in CI** — no GitHub Actions, no Renovate/Dependabot. ⏳ Open (Bucket C9, C10).
+- **L12. Dynamic `<script>` injection for gtag** — standard pattern, URL hardcoded to Google, gated by consent. CSP in `_headers` already whitelists `googletagmanager.com`. ✅ Acceptable.
+- **L13. `pnpm preview` runs wrangler dev** — intentional; Worker routes need live exercise. Document in CLAUDE.md (Bucket C11).
+
+#### Verified NOT present (audited clean)
+
+- No `dangerouslySetInnerHTML`, `eval()`, `new Function()`, or raw `innerHTML` writes anywhere in `src/`.
+- No `target="_blank"` without `rel="noopener noreferrer"`.
+- No `.env`, `.dev.vars`, `*.key`, `*.pem`, or `wrangler.toml` tracked in git.
+- `.gitignore` correctly excludes `.env*`, `.dev.vars*`, `.wrangler/`, `dist/`, `node_modules/`.
+- No source maps in `dist/`.
+- No hardcoded API keys or tokens beyond the public CF beacon.
+- Tel/WhatsApp numbers are static literals, not user-controllable.
+
+### 14.2 Bucket A — Completed (2026-04-22, pre-cutover must-haves)
+
+- [x] **A1.** `public/_headers` with CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP/CORP, immutable cache on `/assets/*`.
+- [x] **A2.** Cloudflare Worker at `worker/index.ts` + `worker/contact.ts`. `POST /api/contact` validates all fields, strips control chars, enforces length caps, rejects filled honeypots, re-checks math-CAPTCHA server-side, and optionally verifies Turnstile. Stores submissions to D1.
+- [x] **A2.** `wrangler.jsonc` — added `main: "worker/index.ts"`, `assets.binding: "ASSETS"`, non-secret `vars` placeholders. Secrets via `.dev.vars` / `wrangler secret put`.
+- [x] **A2.** `tsconfig.worker.json` + project reference in `tsconfig.json`. Generated `worker-configuration.d.ts` via `pnpm wrangler types`.
+- [x] **A2.** `Contact.tsx` — POST JSON to `/api/contact`, `submitting/success/error` states, `maxLength` on all inputs matching server limits. Replaced `useRef(Date.now())` with `useState` lazy init (fixes `react-hooks/purity` error).
+- [x] **A3.** `src/lib/analytics.ts` — `GOOGLE_ADS_ID` / `CONVERSION_LABEL_FORM` come from `import.meta.env.VITE_*`, `AW-\d+` guard prevents misconfigured deploys from injecting a 404 script. UTM capture allowlists `[A-Za-z0-9_\-.~]` and caps length at 200.
+- [x] **A3.** `.env.example` and `.dev.vars.example` documenting public Vite vars vs. Worker secrets.
+- [x] **Verification:** `pnpm lint` clean, `pnpm build` green, `_headers` confirmed at `dist/client/_headers`.
+
+### 14.3 Todo — Remaining security work
+
+#### Manual, pre-deploy (operational)
+
+- [ ] **Secrets:** Set `VITE_GOOGLE_ADS_ID` and `VITE_CONVERSION_LABEL_FORM` in Cloudflare Pages environment (once Juan provides them — Open Item #13).
+- [ ] **Smoke test:** `pnpm preview`, then `curl -I http://localhost:8787/` to verify CSP/HSTS/X-Frame-Options/X-Content-Type-Options/Referrer-Policy/Permissions-Policy are served.
+- [ ] **End-to-end form test:** submit with valid data (expect 200 + gtag `conversion` event), with honeypot filled (expect 204/noop), with wrong CAPTCHA (expect 400), and within 3s of load (expect silent drop).
+- [ ] **External scanners:** pass `https://securityheaders.com` and `https://observatory.mozilla.org` against the preview URL — target grade A or better before cutover.
+- [ ] **Lighthouse** — confirm LCP < 2s (G1) and PageSpeed ≥ 90 haven't regressed from the added headers.
+- [ ] **Decide:** single Cloudflare Web Analytics token (current) vs. separate preview/prod tokens (needs a Vite HTML transform).
+
+#### Bucket B — Should land before cutover
+
+- [ ] **B4.** Move `shadcn` from `dependencies` → `devDependencies` in `package.json`. Run `pnpm install` and confirm `pnpm audit --prod` reports 0 vulnerabilities.
+- [ ] **B6.** Add SRI + `crossorigin="anonymous"` to the Cloudflare beacon `<script>` in `index.html`.
+- [ ] **B7.** Wire all env vars through the Cloudflare Pages project config (not just `.dev.vars`) so preview and prod pick them up automatically on deploy.
+- [ ] **Turnstile (client-side):** provision a Turnstile site, add the widget to `Contact.tsx`, include `cf-turnstile-response` in the POST payload. Worker is already ready to verify (`TURNSTILE_SECRET_KEY`).
+
+#### Bucket C — Hygiene (post-cutover OK)
+
+- [ ] **C8.** Self-host Unsplash images used in `Services.tsx` — removes a third-party CDN from the critical render path, shrinks `img-src` CSP, improves LCP.
+- [ ] **C9.** Add a GitHub Action on PR: `pnpm install --frozen-lockfile && pnpm audit --audit-level=high && pnpm lint && pnpm build`. Gate merges on green.
+- [ ] **C10.** Enable Renovate or Dependabot — monthly dependency PRs against `main`.
+- [ ] **C11.** Update `CLAUDE.md` with: the `_headers` contract, which env vars are client-public (`VITE_*`) vs. server-secret, and the note that `pnpm preview` now exercises Wrangler not plain Vite.
+- [ ] **Logging:** decide where contact submissions should be persisted beyond email (R2 bucket? KV? Workers Analytics Engine?) for auditability / deliverability fallback.
+
+### 14.4 Rate-limiting
+
+The Worker has no rate limit wired yet. Two paths — pick one before cutover:
+
+1. **Cloudflare WAF rate-limiting rule** on the `vivcom.com.au/api/contact` path (dashboard-only, no code). Simpler; no binding churn.
+2. **`ratelimits` binding in `wrangler.jsonc`** — programmatic, testable locally, but adds a binding to manage.
+
+Recommendation: start with option 1 (e.g. 5 requests per minute per IP). Revisit if abuse patterns require per-field or per-session logic.
+
+---
+
 *End of PRD — ready for review and iteration.*

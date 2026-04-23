@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'vivcom-landing-page-draft']),
+  globalIgnores(['dist', 'vivcom-landing-page-draft', 'worker-configuration.d.ts']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

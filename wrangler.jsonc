@@ -1,14 +1,27 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "vivcomau-demo-landing",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-04-09",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "directory": "dist/client"
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  // Secrets (do NOT put here): TURNSTILE_SECRET_KEY
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vivcomau-contacts",
+      "database_id": "18810aa3-3880-4de5-ace8-4a438c18b045",
+      "migrations_dir": "worker/migrations"
+    }
   ]
 }

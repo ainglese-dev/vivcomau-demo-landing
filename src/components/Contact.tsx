@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -13,19 +13,58 @@ import {
 import { MapPin } from 'lucide-react'
 import { trackFormSubmission, getUtmParams } from '@/lib/analytics'
 
-function generateCaptcha() {
-  return {
-    a: Math.floor(Math.random() * 9) + 1,
-    b: Math.floor(Math.random() * 9) + 1,
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, params: {
+        sitekey: string
+        callback: (token: string) => void
+        'error-callback'?: () => void
+        'expired-callback'?: () => void
+        theme?: 'light' | 'dark' | 'auto'
+      }) => string
+      reset: (widgetId: string) => void
+      remove: (widgetId: string) => void
+    }
   }
 }
 
+type SubmitState =
+  | { kind: 'idle' }
+  | { kind: 'submitting' }
+  | { kind: 'success' }
+  | { kind: 'error'; message: string }
+
 export function Contact() {
   const [honeypot, setHoneypot] = useState('')
-  const formLoadTime = useRef(Date.now())
-  const [captcha, setCaptcha] = useState(generateCaptcha)
-  const [captchaAnswer, setCaptchaAnswer] = useState('')
-  const [captchaError, setCaptchaError] = useState(false)
+  const [formLoadTime] = useState(() => Date.now())
+  const [submitState, setSubmitState] = useState<SubmitState>({ kind: 'idle' })
+
+  const turnstileRef = useRef<HTMLDivElement>(null)
+  const widgetIdRef = useRef<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [turnstileError, setTurnstileError] = useState(false)
+
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+    script.defer = true
+    script.onload = () => {
+      if (turnstileRef.current && window.turnstile) {
+        widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA',
+          callback: (token) => { setTurnstileToken(token); setTurnstileError(false) },
+          'expired-callback': () => setTurnstileToken(null),
+          'error-callback': () => { setTurnstileToken(null); setTurnstileError(true) },
+        })
+      }
+    }
+    document.head.appendChild(script)
+    return () => {
+      if (widgetIdRef.current && window.turnstile) window.turnstile.remove(widgetIdRef.current)
+      document.head.removeChild(script)
+    }
+  }, [])
 
   const utmParams = useMemo(() => {
     const stored = getUtmParams()
@@ -44,27 +83,62 @@ export function Contact() {
     }
   }, [])
 
-  function handleSubmit(e: { preventDefault(): void }) {
+  async function handleSubmit(e: { preventDefault(): void; currentTarget: HTMLFormElement }) {
     e.preventDefault()
 
-    // Honeypot: real users never fill this field
     if (honeypot) return
+    if (Date.now() - formLoadTime < 3000) return
 
-    // Time check: bots submit instantly; require ≥3s
-    if (Date.now() - formLoadTime.current < 3000) return
-
-    // Math CAPTCHA check
-    if (parseInt(captchaAnswer) !== captcha.a + captcha.b) {
-      setCaptchaError(true)
-      setCaptcha(generateCaptcha())
-      setCaptchaAnswer('')
+    if (!turnstileToken) {
+      setTurnstileError(true)
       return
     }
 
-    setCaptchaError(false)
-    trackFormSubmission()
-    // TODO: wire to Formspree or Cloudflare Worker (PRD §11 item 6)
+    const form = e.currentTarget
+    const fd = new FormData(form)
+
+    const payload = {
+      name: String(fd.get('name') ?? ''),
+      email: String(fd.get('email') ?? ''),
+      phone: String(fd.get('phone') ?? ''),
+      service: String(fd.get('service') ?? ''),
+      message: String(fd.get('message') ?? ''),
+      utm_source: utmParams.source,
+      utm_medium: utmParams.medium,
+      utm_campaign: utmParams.campaign,
+      website: honeypot,
+      turnstileToken,
+    }
+
+    setSubmitState({ kind: 'submitting' })
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string }
+        setSubmitState({
+          kind: 'error',
+          message: data.error ?? 'Something went wrong. Please try again.',
+        })
+        return
+      }
+      trackFormSubmission()
+      setSubmitState({ kind: 'success' })
+      form.reset()
+      if (widgetIdRef.current && window.turnstile) window.turnstile.reset(widgetIdRef.current)
+      setTurnstileToken(null)
+    } catch {
+      setSubmitState({
+        kind: 'error',
+        message: 'Network error. Please try again or call us directly.',
+      })
+    }
   }
+
+  const isSubmitting = submitState.kind === 'submitting'
 
   return (
     <section id="contact" className="py-20 bg-background">
@@ -117,7 +191,7 @@ export function Contact() {
               <div className="grid sm:grid-cols-2 gap-6 mb-6">
                 <div className="space-y-2">
                   <Label htmlFor="name">Full Name *</Label>
-                  <Input id="name" name="name" placeholder="John Doe" required />
+                  <Input id="name" name="name" placeholder="John Doe" required maxLength={100} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address *</Label>
@@ -127,6 +201,7 @@ export function Contact() {
                     type="email"
                     placeholder="john@example.com"
                     required
+                    maxLength={120}
                   />
                 </div>
               </div>
@@ -139,6 +214,7 @@ export function Contact() {
                     name="phone"
                     type="tel"
                     placeholder="+61 400 000 000"
+                    maxLength={30}
                   />
                 </div>
                 <div className="space-y-2">
@@ -165,33 +241,24 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="space-y-2 mb-8">
+              <div className="space-y-2 mb-6">
                 <Label htmlFor="message">Message</Label>
                 <Textarea
                   id="message"
                   name="message"
                   placeholder="Tell us about your project..."
                   className="min-h-[120px]"
+                  maxLength={2000}
                 />
               </div>
 
-              {/* Math CAPTCHA */}
-              <div className="space-y-2 mb-6">
-                <Label htmlFor="captcha">Security Check *</Label>
-                <p className="text-sm text-muted-foreground">
-                  What is {captcha.a} + {captcha.b}?
-                </p>
-                <Input
-                  id="captcha"
-                  name="captcha"
-                  type="number"
-                  placeholder="Enter the answer"
-                  value={captchaAnswer}
-                  onChange={e => { setCaptchaAnswer(e.target.value); setCaptchaError(false) }}
-                  required
-                />
-                {captchaError && (
-                  <p className="text-sm text-destructive">Incorrect answer, please try again.</p>
+              {/* Turnstile widget */}
+              <div className="mb-6 flex flex-col items-center">
+                <div ref={turnstileRef} />
+                {turnstileError && (
+                  <p className="mt-2 text-sm text-destructive">
+                    Please complete the security check.
+                  </p>
                 )}
               </div>
 
@@ -216,10 +283,22 @@ export function Contact() {
               <Button
                 type="submit"
                 size="lg"
+                disabled={isSubmitting}
                 className="w-full text-base h-12 whitespace-nowrap bg-black text-white hover:bg-zinc-800"
               >
-                Send Message
+                {isSubmitting ? 'Sending…' : 'Send Message'}
               </Button>
+
+              {submitState.kind === 'success' && (
+                <p className="mt-4 text-sm text-green-700" role="status">
+                  Thanks — we received your message and will be in touch shortly.
+                </p>
+              )}
+              {submitState.kind === 'error' && (
+                <p className="mt-4 text-sm text-destructive" role="alert">
+                  {submitState.message}
+                </p>
+              )}
             </form>
           </div>
         </div>

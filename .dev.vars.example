@@ -1,0 +1,12 @@
+# Cloudflare Worker secrets for local `wrangler dev` / `pnpm preview`.
+# Copy to `.dev.vars` (gitignored) and fill in real values.
+# In production, set via `wrangler secret put <NAME>` or the Cloudflare dashboard.
+
+# Cloudflare Turnstile secret. Leave empty to skip Turnstile verification
+# (honeypot + math-CAPTCHA still apply). Set once a Turnstile widget is added
+# to the Contact form.
+TURNSTILE_SECRET_KEY=
+
+# Telegram bot notifications on new form submission.
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=

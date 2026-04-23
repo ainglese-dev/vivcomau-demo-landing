@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "pnpm run build && wrangler dev",
-    "deploy": "pnpm run build && wrangler deploy"
+    "db:migrate:local": "wrangler d1 migrations apply vivcomau-contacts --local",
+    "db:migrate:remote": "wrangler d1 migrations apply vivcomau-contacts --remote",
+    "preview": "pnpm run db:migrate:local && pnpm run build && wrangler dev",
+    "deploy": "pnpm run db:migrate:remote && pnpm run build && wrangler deploy"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",

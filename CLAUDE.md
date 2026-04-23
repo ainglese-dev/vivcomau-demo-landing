@@ -75,13 +75,16 @@ If you need to make progress before these are resolved, pick a sensible default 
 
 ## Commands
 
-| Command          | Purpose                                                                |
-| ---------------- | ---------------------------------------------------------------------- |
-| `pnpm install`   | Install dependencies                                                   |
-| `pnpm dev`       | Local dev server at <http://localhost:5173>                            |
-| `pnpm build`     | Type-check (`tsc -b`) + production build to `dist/`                    |
-| `pnpm preview`   | Serve the built `dist/` locally to sanity-check the production output  |
-| `pnpm lint`      | ESLint over the project                                                |
+| Command                    | Purpose                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------ |
+| `pnpm install`             | Install dependencies                                                                 |
+| `pnpm dev`                 | Vite-only dev server at <http://localhost:5173> — UI iteration, no Worker or D1     |
+| `pnpm build`               | Type-check (`tsc -b`) + production build to `dist/`                                 |
+| `pnpm preview`             | Apply local DB migration → build → full Worker stack at <http://localhost:8787>     |
+| `pnpm deploy`              | Apply remote DB migration → build → deploy to Cloudflare                            |
+| `pnpm db:migrate:local`    | Apply pending migrations to the local (`.wrangler/state/`) D1 database              |
+| `pnpm db:migrate:remote`   | Apply pending migrations to the production D1 database                              |
+| `pnpm lint`                | ESLint over the project                                                              |
 
 Adding shadcn components: `pnpm dlx shadcn@latest add <component>` (e.g. `button`, `card`, `input`). Components land in [src/components/ui/](src/components/ui/).
 
