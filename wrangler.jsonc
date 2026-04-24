@@ -23,5 +23,11 @@
       "database_id": "18810aa3-3880-4de5-ace8-4a438c18b045",
       "migrations_dir": "worker/migrations"
     }
+  ],
+  // Secrets (do NOT put here): TURNSTILE_SECRET_KEY, NOTIFY_EMAILS
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
   ]
 }

@@ -1,5 +1,6 @@
 import type { Env } from './index'
 
+
 const ALLOWED_SERVICES = new Set([
   'cctv',
   'telecom',
@@ -53,6 +54,77 @@ function sanitize(v: unknown, max: number): string {
 
 function isEmail(v: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) && v.length <= LIMITS.email
+}
+
+function escHtml(v: string): string {
+  return v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
+function buildEmailHtml(params: {
+  name: string; email: string; phone: string; service: string
+  message: string; utm_source: string; utm_medium: string; utm_campaign: string
+}): string {
+  const { name, email, phone, service, message, utm_source, utm_medium, utm_campaign } = params
+  const e = escHtml
+
+  const fieldRows = [
+    ['Name',    e(name)],
+    ['Email',   `<a href="mailto:${e(email)}" style="color:#004aad;text-decoration:none">${e(email)}</a>`],
+    phone   ? ['Phone',   `<a href="tel:${e(phone)}" style="color:#004aad;text-decoration:none">${e(phone)}</a>`]   : null,
+    service ? ['Service', `<span style="background:#e8f0fb;color:#004aad;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600">${e(service)}</span>`] : null,
+  ].filter(Boolean) as [string, string][]
+
+  const tdLabel = `style="padding:10px 16px;color:#666666;font-size:13px;white-space:nowrap;vertical-align:top;width:80px;border-bottom:1px solid #f0f2f5"`
+  const tdValue = `style="padding:10px 16px;color:#111;font-size:14px;vertical-align:top;border-bottom:1px solid #f0f2f5"`
+  const rowsHtml = fieldRows.map(([l, v]) => `<tr><td ${tdLabel}>${l}</td><td ${tdValue}>${v}</td></tr>`).join('')
+
+  const messageBlock = message ? `
+    <div style="margin-top:20px">
+      <div style="font-size:12px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Message</div>
+      <div style="background:#f8f9fb;border-left:3px solid #00c2cb;border-radius:4px;padding:12px 16px;font-size:14px;color:#333;white-space:pre-wrap;line-height:1.6">${e(message)}</div>
+    </div>` : ''
+
+  const utmBlock = (utm_source || utm_medium || utm_campaign) ? `
+    <div style="margin-top:14px;padding:10px 14px;background:#f0f2f5;border-radius:6px;font-size:12px;color:#666666">
+      <span style="font-weight:600">UTMs:</span> ${e([utm_source, utm_medium, utm_campaign].filter(Boolean).join(' / '))}
+    </div>` : ''
+
+  return `<!DOCTYPE html><html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f0f2f5;font-family:system-ui,-apple-system,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0f2f5;padding:32px 16px">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%">
+  <tr>
+    <td style="background:#002352;padding:22px 28px;border-radius:10px 10px 0 0">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td><span style="color:#fff;font-size:20px;font-weight:700;letter-spacing:.08em">VIVCOM</span>
+            <span style="display:inline-block;margin-left:10px;color:#00c2cb;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle">New Lead</span></td>
+        <td align="right"><span style="color:rgba(255,255,255,.4);font-size:11px">vivcom.com.au</span></td>
+      </tr></table>
+    </td>
+  </tr>
+  <tr><td style="background:#00c2cb;height:3px;line-height:3px;font-size:0">&nbsp;</td></tr>
+  <tr>
+    <td style="background:#fff;padding:28px;border-radius:0 0 10px 10px">
+      <h2 style="margin:0 0 20px;font-size:17px;color:#002352;font-weight:600">
+        ${e(name)}${service ? ` <span style="color:#cad0d8;font-weight:400">/</span> <span style="color:#3274ba">${e(service)}</span>` : ''}
+      </h2>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #f0f2f5;border-radius:8px;overflow:hidden">
+        ${rowsHtml}
+      </table>
+      ${messageBlock}
+      ${utmBlock}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:20px 0 4px;text-align:center;color:#cad0d8;font-size:12px">
+      Sent via <a href="https://vivnotify.com" style="color:#00c2cb;text-decoration:none;font-weight:500">VIVNotify</a> &middot; Automated lead notification
+    </td>
+  </tr>
+</table>
+</td></tr></table>
+</body></html>`
 }
 
 async function verifyTurnstile(token: string, secret: string, ip: string): Promise<boolean> {
@@ -167,6 +239,37 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
       if (!tgRes.ok) console.error('[contact] Telegram error', tgRes.status, await tgRes.text())
     } catch (err) {
       console.error('[contact] Telegram notify failed', err)
+    }
+  }
+
+  if (env.EMAIL && env.NOTIFY_EMAILS) {
+    const recipients = env.NOTIFY_EMAILS.split(',').map(s => s.trim()).filter(Boolean)
+    const subject = `New VIVCOM lead — ${name}${service ? ` / ${service}` : ''}`
+    const text = [
+      `Name:    ${name}`,
+      `Email:   ${email}`,
+      phone   ? `Phone:   ${phone}`   : null,
+      service ? `Service: ${service}` : null,
+      message ? `\nMessage:\n${message}` : null,
+      (utm_source || utm_medium || utm_campaign)
+        ? `\nUTMs: ${[utm_source, utm_medium, utm_campaign].filter(Boolean).join(' / ')}`
+        : null,
+    ].filter((l) => l !== null).join('\n')
+
+    const html = buildEmailHtml({ name, email, phone, service, message, utm_source, utm_medium, utm_campaign })
+
+    for (const to of recipients) {
+      try {
+        await env.EMAIL.send({
+          from: { email: 'hello@vivnotify.com', name: 'VIVNotify' },
+          to,
+          subject,
+          text,
+          html,
+        })
+      } catch (err) {
+        console.error(`[contact] email notify failed for ${to}`, err)
+      }
     }
   }
 
