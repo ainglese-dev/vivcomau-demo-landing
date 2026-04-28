@@ -25,7 +25,7 @@ function isConfigured(): boolean {
 
 export function loadGtag(): void {
   if (!isConfigured()) {
-    console.warn('[analytics] VITE_GOOGLE_ADS_ID is not set; gtag not loaded.')
+    if (import.meta.env.DEV) console.warn('[analytics] VITE_GOOGLE_ADS_ID is not set; gtag not loaded.') // [DEV_LOG]
     return
   }
   if (document.getElementById('gtag-script')) return

@@ -1,4 +1,5 @@
 import type { Env } from './index'
+import { escHtml } from './utils'
 
 
 const ALLOWED_SERVICES = new Set([
@@ -56,9 +57,6 @@ function isEmail(v: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) && v.length <= LIMITS.email
 }
 
-function escHtml(v: string): string {
-  return v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-}
 
 function buildEmailHtml(params: {
   name: string; email: string; phone: string; service: string

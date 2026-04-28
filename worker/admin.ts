@@ -1,4 +1,5 @@
 import type { Env } from './index'
+import { escHtml as esc } from './utils'
 
 const SERVICE_LABELS: Record<string, string> = {
   cctv: 'CCTV & Security Cameras',
@@ -26,14 +27,6 @@ type Submission = {
   user_agent: string | null
 }
 
-function esc(v: string | null | undefined): string {
-  if (!v) return ''
-  return v
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
 
 function td(v: string | null | undefined, cls = ''): string {
   return `<td class="${cls}">${esc(v)}</td>`
@@ -267,7 +260,7 @@ export async function handleAdmin(request: Request, env: Env): Promise<Response>
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     return new Response(
-      `<!doctype html><html><body style="font:14px monospace;padding:2rem"><h1>Admin error</h1><pre>${msg}</pre></body></html>`,
+      `<!doctype html><html><body style="font:14px monospace;padding:2rem"><h1>Admin error</h1><pre>${esc(msg)}</pre></body></html>`,
       { status: 500, headers: { 'Content-Type': 'text/html; charset=utf-8' } }
     )
   }

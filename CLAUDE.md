@@ -91,3 +91,73 @@ Adding shadcn components: `pnpm dlx shadcn@latest add <component>` (e.g. `button
 ## Current Scaffold State
 
 The scaffold is minimal on purpose: only [src/components/Hero.tsx](src/components/Hero.tsx) exists as a real component (rendered from [src/App.tsx](src/App.tsx)). It proves Tailwind v4 + shadcn `Button` are wired and includes the real `tel:` and `wa.me` links from PRD §8 so the conversion paths work from day one. The remaining PRD §5 sections (Services, Why, Testimonials, About, Contact, Footer) are not yet built.
+
+## Production Deployment Checklist
+
+> Not releasing now — this checklist captures everything needed when cutting over from the demo Worker to `vivcom.com.au`.
+>
+> DNS approach: **NS delegation** — point nameservers to Cloudflare at the registrar (no domain transfer; registrar stays the same).
+
+### A — Code changes (one dev session before cutover)
+
+**1. Rename worker in `wrangler.jsonc`**
+
+- Change `"name"` from `"vivcomau-demo-landing"` → `"vivcomau"`
+- Add custom domain routes:
+
+```jsonc
+"routes": [
+  { "pattern": "vivcom.com.au", "custom_domain": true },
+  { "pattern": "www.vivcom.com.au", "custom_domain": true }
+]
+```
+
+**2. Fix hardcoded demo URL — [`worker/admin.ts`](worker/admin.ts) line ~194**
+
+Change logout redirect from `https://vivcomau-demo-landing.angel-inglese.workers.dev/` → `https://vivcom.com.au/`
+
+This is the **only** hardcoded demo URL in the codebase. `robots.txt`, `sitemap.xml`, and the email HTML footer already reference `vivcom.com.au`.
+
+### B — Cloudflare Dashboard (one-time setup, no code)
+
+1. **Add zone:** Add `vivcom.com.au` as a new Cloudflare zone → get the two nameserver hostnames
+2. **Cloudflare Access:** Create an Access application for `vivcom.com.au/admin`, add email policy (Angel + Juan)
+3. **Worker secrets** — must re-provision after rename (secrets are scoped to worker name):
+
+```bash
+wrangler secret put TURNSTILE_SECRET_KEY
+wrangler secret put NOTIFY_EMAILS        # comma-separated: juan@...,angel@...
+wrangler secret put TELEGRAM_BOT_TOKEN   # optional
+wrangler secret put TELEGRAM_CHAT_ID     # optional
+```
+
+1. **Build-time env vars** — set in Cloudflare dashboard or `.env`:
+
+```sh
+VITE_GOOGLE_ADS_ID=AW-XXXXXXXXXX
+VITE_CONVERSION_LABEL_FORM=<label>
+```
+
+1. **Email sender:** Confirm `hello@vivnotify.com` is authorized in the Email Routing / Send Email binding for the `vivcomau` worker.
+
+### C — Cutover day (in order)
+
+1. At registrar: update nameservers to the Cloudflare hostnames from B-1
+2. Wait for NS propagation (minutes to a few hours)
+3. `pnpm deploy` — handles DB migrations + build + deploy; Wrangler auto-provisions TLS for the custom domain
+
+**Smoke-test checklist:**
+
+- [ ] `https://vivcom.com.au` loads with valid TLS
+- [ ] `https://www.vivcom.com.au` loads (or redirects to apex)
+- [ ] Contact form → email arrives + D1 row created
+- [ ] `/admin` blocked for unauthenticated users (Cloudflare Access)
+- [ ] Admin logout redirects to `https://vivcom.com.au/` (not old workers.dev URL)
+- [ ] Google Ads conversion fires on form submit
+- [ ] Turnstile challenge works on contact form
+- [ ] PageSpeed ≥ 90 / LCP < 2s (Lighthouse on production URL)
+
+### Notes
+
+- `pnpm deploy` is the same command for production — no separate prod script needed.
+- D1 database binding carries over unchanged; the DB ID in `wrangler.jsonc` is stable across the rename.
