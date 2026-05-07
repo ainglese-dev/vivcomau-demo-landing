@@ -214,32 +214,6 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
     console.error('[contact] D1 insert failed', err)
   }
 
-  if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {
-    const lines = [
-      `🔔 <b>New VIVCOM lead</b>`,
-      ``,
-      `👤 <b>${name}</b>`,
-      `📧 ${email}`,
-      phone ? `📞 ${phone}` : null,
-      service ? `🔧 ${service}` : null,
-      message ? `\n💬 ${message}` : null,
-      (utm_source || utm_medium || utm_campaign)
-        ? `\n📊 ${[utm_source, utm_medium, utm_campaign].filter(Boolean).join(' / ')}`
-        : null,
-    ].filter((l) => l !== null).join('\n')
-
-    try {
-      const tgRes = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN.trim()}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID.trim(), text: lines, parse_mode: 'HTML' }),
-      })
-      if (!tgRes.ok) console.error('[contact] Telegram error', tgRes.status, await tgRes.text())
-    } catch (err) {
-      console.error('[contact] Telegram notify failed', err)
-    }
-  }
-
   if (env.EMAIL && env.NOTIFY_EMAILS) {
     const recipients = env.NOTIFY_EMAILS.split(',').map(s => s.trim()).filter(Boolean)
     const subject = `New VIVCOM lead — ${name}${service ? ` / ${service}` : ''}`

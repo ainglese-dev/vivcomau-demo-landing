@@ -170,9 +170,35 @@ export function Contact() {
                       Service Area
                     </p>
                     <p className="text-lg font-semibold text-black">
-                      Sydney, Australia & Florida, United States
+                      Sydney, Australia
                     </p>
                   </div>
+                </div>
+
+                <div className="rounded-xl overflow-hidden border border-border">
+                  {/* Fixed-height wrapper clips the OSM attribution bar */}
+                  <div className="overflow-hidden" style={{ height: '210px' }}>
+                    <iframe
+                      title="VIVCOM Sydney Service Area"
+                      width="100%"
+                      height="248"
+                      loading="lazy"
+                      src="https://www.openstreetmap.org/export/embed.html?bbox=150.5%2C-34.2%2C151.4%2C-33.4&layer=mapnik&marker=-33.8688%2C151.2093"
+                      className="block border-0"
+                    />
+                  </div>
+                  <p className="text-xs text-center py-1.5 text-muted-foreground bg-muted/30">
+                    ©{' '}
+                    <a
+                      href="https://www.openstreetmap.org/copyright"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      OpenStreetMap
+                    </a>{' '}
+                    contributors
+                  </p>
                 </div>
               </div>
             </div>

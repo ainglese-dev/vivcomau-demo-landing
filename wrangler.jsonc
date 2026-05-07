@@ -1,6 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "vivcomau-demo-landing",
+  "name": "vivcomau",
+  "routes": [
+    { "pattern": "vivcom.com.au", "custom_domain": true },
+    { "pattern": "www.vivcom.com.au", "custom_domain": true }
+  ],
   "main": "worker/index.ts",
   "compatibility_date": "2026-04-09",
   "observability": {

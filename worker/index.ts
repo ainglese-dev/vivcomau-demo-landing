@@ -5,8 +5,6 @@ export interface Env {
   ASSETS: Fetcher
   DB: D1Database
   TURNSTILE_SECRET_KEY?: string
-  TELEGRAM_BOT_TOKEN?: string
-  TELEGRAM_CHAT_ID?: string
   EMAIL?: SendEmail
   NOTIFY_EMAILS?: string
 }

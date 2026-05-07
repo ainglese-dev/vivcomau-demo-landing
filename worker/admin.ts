@@ -191,7 +191,7 @@ function page(sections: string, count: number): string {
     <img src="/vivcom-logo.svg" alt="VIVCOM">
     <span class="topbar-label">Admin</span>
   </div>
-  <a href="/cdn-cgi/access/logout?redirect_url=https://vivcomau-demo-landing.angel-inglese.workers.dev/" class="logout">Log out</a>
+  <a href="/cdn-cgi/access/logout?redirect_url=https://vivcom.com.au/" class="logout">Log out</a>
 </header>
 <div class="content">
   <div class="toolbar">
