@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { ShieldCheck, Zap, Server, ArrowRight, Mail } from 'lucide-react'
+import { ShieldCheck, Zap, Server, ArrowRight } from 'lucide-react'
 import { useMemo } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -66,17 +66,11 @@ export function Hero() {
             your infrastructure.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="flex items-center justify-center">
             <Button asChild size="lg" className="rounded-full gap-2 bg-[rgb(0,194,203)] hover:bg-[rgb(0,194,203)] [a]:hover:bg-[rgb(0,194,203)] text-black transition-transform hover:scale-105">
               <a href="#contact">
                 Let's Get Started
                 <ArrowRight className="w-5 h-5" />
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full border-white/50 text-white bg-white/10 hover:bg-white/20 gap-2">
-              <a href="mailto:contact@vivcom.com.au">
-                <Mail className="w-5 h-5" />
-                Email Us
               </a>
             </Button>
           </div>
