@@ -7,6 +7,7 @@ const ALLOWED_SERVICES = new Set([
   'telecom',
   'wireless',
   'security',
+  'smart-hands',
   'automation',
   'compliance',
   'cloud',
@@ -117,7 +118,7 @@ function buildEmailHtml(params: {
   </tr>
   <tr>
     <td style="padding:20px 0 4px;text-align:center;color:#cad0d8;font-size:12px">
-      Sent via <a href="https://vivnotify.com" style="color:#00c2cb;text-decoration:none;font-weight:500">VIVNotify</a> &middot; Automated lead notification
+      Sent via <a href="https://vivcom.com.au" style="color:#00c2cb;text-decoration:none;font-weight:500">VIVCOM</a> &middot; Automated lead notification
     </td>
   </tr>
 </table>
@@ -233,7 +234,7 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
     for (const to of recipients) {
       try {
         await env.EMAIL.send({
-          from: { email: 'hello@vivnotify.com', name: 'VIVNotify' },
+          from: { email: 'hello@vivcom.com.au', name: 'VIVCOM' },
           to,
           subject,
           text,

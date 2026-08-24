@@ -1,0 +1,24 @@
+# VIVCOM
+
+> Sydney, NSW-based technology services company. VIVCOM delivers on-site low-voltage/telecom installations across Sydney and NSW, plus remote enterprise IT consulting and automation. Licensed & insured, 12+ years experience.
+
+## Local installation services (Sydney & NSW, on-site)
+
+- [Security Camera Installation](https://vivcom.com.au/#cctv): CCTV and security camera systems with remote monitoring and HD night vision.
+- [Network & Data Cabling](https://vivcom.com.au/#telecom): Structured cabling (Cat6/6A, fibre) and data point installation.
+- [Wireless & Wi-Fi Installation](https://vivcom.com.au/#wireless): Wi-Fi and mesh network setup with coverage assessment.
+- [Security & Alarm Systems](https://vivcom.com.au/#security): Alarm installation, access control, and intercom systems.
+- [Datacenter Smart Hands](https://vivcom.com.au/#smart-hands): On-site remote-hands support at NSW datacenters for companies without local staff — cabling, hardware swaps, power cycling, visual inspections, rack-and-stack.
+
+## Consulting & automation services (remote, Australia-wide)
+
+- [Data Centre Automation](https://vivcom.com.au/#automation): VXLAN EVPN fabric design, Infrastructure as Code (Ansible, Terraform), legacy migration.
+- [Cybersecurity & Compliance](https://vivcom.com.au/#compliance): HIPAA, PCI-DSS, IEC 62443, and ISO 42001 AI Governance advisory.
+- [Cloud Infrastructure](https://vivcom.com.au/#cloud): AWS/Azure architecture, Kubernetes, CI/CD, hybrid cloud connectivity.
+
+## Contact
+
+- Phone: +61 402 229 561
+- Email: hello@vivcom.com.au
+- Contact form: https://vivcom.com.au/#contact
+- Service area: Sydney & NSW (installs), Australia-wide (consulting)

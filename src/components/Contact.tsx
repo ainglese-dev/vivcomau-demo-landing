@@ -254,6 +254,7 @@ export function Contact() {
                       <SelectItem value="telecom">Network & Data Cabling</SelectItem>
                       <SelectItem value="wireless">Wireless & Wi-Fi</SelectItem>
                       <SelectItem value="security">Security & Alarm Systems</SelectItem>
+                      <SelectItem value="smart-hands">Datacenter Smart Hands</SelectItem>
                       <SelectItem value="automation">
                         Network Automation
                       </SelectItem>

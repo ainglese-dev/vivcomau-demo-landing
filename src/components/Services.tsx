@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Camera, Network, Wifi, ShieldCheck, ServerCog, ShieldAlert, Cloud } from 'lucide-react'
+import { Camera, Network, Wifi, ShieldCheck, Server, ServerCog, ShieldAlert, Cloud } from 'lucide-react'
 
 const localServices = [
   {
@@ -34,6 +34,14 @@ const localServices = [
       'Alarm installation, access control, and intercom systems for residential and commercial properties. Monitored and unmonitored options available.',
     icon: ShieldCheck,
     image: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=400&fit=crop',
+  },
+  {
+    id: 'smart-hands',
+    title: 'Datacenter Smart Hands',
+    description:
+      "On-site technical support at NSW datacenters for companies without local staff on the ground — cabling and cable management, hardware swaps, power cycling, visual inspections, and rack-and-stack.",
+    icon: Server,
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
   },
 ]
 

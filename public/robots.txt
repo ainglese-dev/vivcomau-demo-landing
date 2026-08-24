@@ -1,4 +1,48 @@
 User-agent: *
 Allow: /
 
+# AI assistant / AI search crawlers — explicitly allowed (including training
+# crawlers) per docs/adr/0001-allow-all-ai-crawlers.md. This is intentionally
+# redundant with the wildcard rule above; it documents the policy explicitly
+# rather than relying on the default. Cloudflare's zone-level AI Traffic
+# Options (Security > Bots) can still override this — check there too.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
 Sitemap: https://vivcom.com.au/sitemap.xml

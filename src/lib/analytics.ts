@@ -51,6 +51,12 @@ export function loadGtag(): void {
 // ---------------------------------------------------------------------------
 
 export function trackFormSubmission(): void {
+  // Always push a plain event for GTM (GTM-N358Q8ZN, loaded unconditionally in
+  // index.html) to catch — Ads/GA4 conversion tags are configured inside GTM
+  // itself, not via the gtag.js path below.
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push({ event: 'contact_form_submit' })
+
   if (!isConfigured() || !CONVERSION_LABEL_FORM) return
   window.gtag?.('event', 'conversion', {
     send_to: `${GOOGLE_ADS_ID}/${CONVERSION_LABEL_FORM}`,

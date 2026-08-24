@@ -1,0 +1,3 @@
+# Allow all AI crawlers, including training bots
+
+VIVCOM wants maximum AI-assistant visibility for its NSW install/consulting services. Cloudflare's 2026 AI-bot controls let a site allow real-time search/agent crawlers (for AI-assistant citations) while separately blocking training crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot) that feed model weights — most practitioners reportedly choose that split to get citation visibility without giving away content for training. VIVCOM deliberately chose to allow all categories, including training, prioritizing any possible future AI-training-data benefit over withholding content. This is hard to reverse in effect: crawls already ingested into a model's training data can't be un-ingested even if the policy changes later.
