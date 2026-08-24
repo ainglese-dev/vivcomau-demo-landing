@@ -17,7 +17,6 @@ const localServices = [
       'Structured cabling (Cat6/6A, fibre), data point installation, and office network troubleshooting by certified technicians.',
     icon: Network,
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
-    featured: true,
   },
   {
     id: 'wireless',
@@ -42,6 +41,7 @@ const localServices = [
       "On-site technical support at NSW datacenters for companies without local staff on the ground — cabling and cable management, hardware swaps, power cycling, visual inspections, and rack-and-stack.",
     icon: Server,
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
+    featured: true,
   },
 ]
 
@@ -143,7 +143,7 @@ export function Services() {
             </span>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {localServices.map((service) => (
               <ServiceCard
                 key={service.id}
