@@ -32,7 +32,7 @@ const localServices = [
     description:
       'Alarm installation, access control, and intercom systems for residential and commercial properties. Monitored and unmonitored options available.',
     icon: ShieldCheck,
-    image: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1521386455230-4ceaa25b72be?w=600&h=400&fit=crop',
   },
   {
     id: 'smart-hands',
@@ -40,7 +40,7 @@ const localServices = [
     description:
       "On-site technical support at NSW datacenters for companies without local staff on the ground — cabling and cable management, hardware swaps, power cycling, visual inspections, and rack-and-stack.",
     icon: Server,
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1581092919535-7146ff1a590b?w=600&h=400&fit=crop',
     featured: true,
   },
 ]

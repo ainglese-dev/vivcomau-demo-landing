@@ -17,5 +17,9 @@ A Tier 1 service: on-site technical labor at NSW datacenters performed on behalf
 _Avoid_: Remote hands (industry-interchangeable, but "Smart Hands" is VIVCOM's chosen term)
 
 **Lead Routing**:
-The rule for who gets notified of a contact-form submission. Resolved as flat, not tier-based: every submission notifies the same fixed recipient list (Juan + the VIV53 principal), regardless of which service tier was selected. There is no branching on the service field.
+The rule for who gets notified of a contact-form submission. Resolved as flat, not tier-based: every submission notifies the same fixed recipient list (Juan + Angel, the site operator), regardless of which service tier was selected. There is no branching on the service field, and Alfredo (VIV53's principal) is not currently on this list — see the open question in CLAUDE.md's Open Decisions about whether Tier 2 leads should reach him directly.
 _Avoid_: Lead assignment, ticket routing
+
+**VIVCOM / VIV53 relationship**:
+VIVCOM (Juan, Sydney) and VIV53 (Alfredo, Miami) are separate, unrelated companies in a business alliance — not a merger, ownership relationship, or shared founder. The site presents their combined services under one VIVCOM-branded page by agreement, per PRD §7.2/§13.
+_Avoid_: "Merger", "parent company", "sister company"

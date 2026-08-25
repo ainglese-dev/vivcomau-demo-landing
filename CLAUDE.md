@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Replacement landing page for **vivcom.com.au** — a Sydney low-voltage / telecom company (VIVCOM PTY LTD, owned by Juan) that is merging its install services with the IT consulting / automation capabilities of **VIV53 LLC** (Miami). Single-page site, **live in production** on Cloudflare Workers at a custom domain — DNS cutover from the previous WordPress site is complete.
 
-The customer sees **one brand (VIVCOM)**. Internal routing between Juan (Sydney installs) and VIV53 (remote consulting) is invisible to visitors. As currently built, lead notification does **not** split by service tier — every contact-form submission notifies a single fixed recipient list (Juan + the VIV53 principal), regardless of which service was selected. See [CONTEXT.md](CONTEXT.md) for domain vocabulary (Tier 1/Tier 2, Smart Hands, Lead Routing) and [docs/adr/](docs/adr/) for recorded architectural decisions.
+The customer sees **one brand (VIVCOM)**. VIVCOM (Juan, Sydney) and VIV53 (Alfredo, Miami) are separate, unrelated companies in a business alliance — not a merger or shared ownership; see [CONTEXT.md](CONTEXT.md) "VIVCOM / VIV53 relationship". Internal routing between the two is invisible to visitors. As currently built, lead notification does **not** split by service tier — every contact-form submission notifies a single fixed recipient list (Juan + Angel, the site operator), regardless of which service was selected. **Alfredo (VIV53's principal) is not currently on this list** — open question, see Open Decisions. See [CONTEXT.md](CONTEXT.md) for domain vocabulary (Tier 1/Tier 2, Smart Hands, Lead Routing) and [docs/adr/](docs/adr/) for recorded architectural decisions.
 
 ## Tech Stack
 
@@ -74,7 +74,7 @@ PRD §11 originally listed 15 pending items. Status as of the last full review:
 - **#4** ABN — in `Footer.tsx`
 - **#6** Form backend — Cloudflare Worker (`worker/contact.ts` + D1), not Formspree
 - **#9** VIV53 service copy — written into `consultingServices` in `Services.tsx`
-- **#10** Lead routing logic — resolved as flat, not tier-based: every submission notifies the same fixed `NOTIFY_EMAILS` list (Juan + VIV53 principal), no per-service split. See [CONTEXT.md](CONTEXT.md) "Lead Routing".
+- **#10** Lead routing logic — resolved as flat, not tier-based: every submission notifies the same fixed `NOTIFY_EMAILS` list (Juan + Angel, the site operator), no per-service split. See [CONTEXT.md](CONTEXT.md) "Lead Routing".
 - **#11** "Powered by VIV53" attribution — resolved by omission, matches the invisible-sub-brand directive
 - **#15** Zaraz vs direct gtag.js — resolved as direct GTM snippet; Ads/GA4 tags are configured inside GTM's dashboard, not via `VITE_GOOGLE_ADS_ID`/`VITE_CONVERSION_LABEL_FORM` (those env vars and their code path are unused/dead, kept in case a non-GTM fallback is ever needed)
 
@@ -84,6 +84,7 @@ PRD §11 originally listed 15 pending items. Status as of the last full review:
 - **#7** Google Business Profile link — not referenced anywhere in the site
 - **#12** VIV53 team bios/headshots — not present in `About.tsx`
 - Also flagged (not an original PRD §11 item): `og-image.png` is referenced in `index.html`'s OG/Twitter/Schema.org tags but the file doesn't exist in `public/` — likely a broken social-share preview image
+- Also flagged: `NOTIFY_EMAILS` currently notifies only Juan + Angel — **Alfredo (VIV53's principal, Miami) is not on the list**, so Tier 2 (consulting/automation) leads never reach VIV53 directly. Worth confirming whether that's intentional (e.g. Angel forwards manually) or a gap to fix
 
 If you need to make progress before an open item is resolved, pick a sensible default and flag it explicitly rather than silently committing to one.
 
