@@ -84,7 +84,7 @@ PRD §11 originally listed 15 pending items. Status as of the last full review:
 - **#7** Google Business Profile link — not referenced anywhere in the site
 - **#12** VIV53 team bios/headshots — not present in `About.tsx`
 - Also flagged (not an original PRD §11 item): `og-image.png` is referenced in `index.html`'s OG/Twitter/Schema.org tags but the file doesn't exist in `public/` — likely a broken social-share preview image
-- Also flagged: `NOTIFY_EMAILS` currently notifies only Juan + Angel — **Alfredo (VIV53's principal, Miami) is not on the list**, so Tier 2 (consulting/automation) leads never reach VIV53 directly. Worth confirming whether that's intentional (e.g. Angel forwards manually) or a gap to fix
+- `NOTIFY_EMAILS` intentionally notifies only Juan + Angel. Alfredo (VIV53's principal) is deliberately not on it — confirmed, not a gap.
 
 If you need to make progress before an open item is resolved, pick a sensible default and flag it explicitly rather than silently committing to one.
 

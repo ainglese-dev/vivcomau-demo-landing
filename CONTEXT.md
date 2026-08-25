@@ -21,5 +21,5 @@ The rule for who gets notified of a contact-form submission. Resolved as flat, n
 _Avoid_: Lead assignment, ticket routing
 
 **VIVCOM / VIV53 relationship**:
-VIVCOM (Juan, Sydney) and VIV53 (Alfredo, Miami) are separate, unrelated companies in a business alliance — not a merger, ownership relationship, or shared founder. The site presents their combined services under one VIVCOM-branded page by agreement, per PRD §7.2/§13.
+VIVCOM (Juan, Sydney) and VIV53 (Alfredo, Miami) are separate, unrelated companies in a small, informal alliance — not a merger, ownership relationship, formal partnership, or shared founder. The site presents their combined services under one VIVCOM-branded page by agreement, per PRD §7.2/§13.
 _Avoid_: "Merger", "parent company", "sister company"
